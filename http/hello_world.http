@@ -1,20 +1,20 @@
-@base_url="http://127.0.0.1:9001"
+@base_url=http://127.0.0.1:9001
 
 ### GET
-curl -X GET --location {{base_url}}
+GET {{base_url}}
 
 ### === HELLO WORLD
 ###
-curl -X GET --location {{base_url}}/v1/hello-world
+GET {{base_url}}/v1/hello-world
 
 ### path
-curl -X GET --location {{base_url}}/v1/hello-world/path/tess
+GET {{base_url}}/v1/hello-world/path/tess
 
 ### query
-curl -X GET --location {{base_url}}/v1/hello-world/query?message=teewww
+GET {{base_url}}/v1/hello-world/query?message=teewww
 
 ### payload
-curl -X POST --location {{base_url}}/v1/hello-world/payload
+POST {{base_url}}/v1/hello-world/payload
 Content-Type: application/json
 
 {
@@ -22,4 +22,4 @@ Content-Type: application/json
 }
 
 ### error
-curl -X GET --location {{base_url}}/v1/hello-world/error/500
+GET {{base_url}}/v1/hello-world/error/500
