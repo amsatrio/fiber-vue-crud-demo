@@ -1,8 +1,0 @@
-@baseUrl="http://localhost:9001"
-
-### GET
-curl -X GET --location {{baseUrl}}
-
-### === HELLO WORLD
-### GET 
-curl -X GET --location {{baseUrl}}/api/hello-world
