@@ -33,15 +33,9 @@ func routes(app *fiber.App) {
 	app.Get("/*", static.New("./public"))
 
 	api := app.Group("/v1")
+	hello_world.Router(api)
 
-	hello_world_api := api.Group("/hello-world")
-	hello_world_api.Get("", hello_world.HelloWorld)
-	hello_world_api.Get("/path/:message", hello_world.HelloWorldPath)
-	hello_world_api.Get("/query", hello_world.HelloWorldQuery)
-	hello_world_api.Post("/payload", hello_world.HelloWorldPayload)
-	hello_world_api.Get("/error/:type", hello_world.HelloWorldError)
-
-	app.Get("/config", func(ctx fiber.Ctx) error {
+	api.Get("/config", func(ctx fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{
 			"SERVER_PORT": os.Getenv("SERVER_PORT"),
 		})
