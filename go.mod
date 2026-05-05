@@ -2,8 +2,6 @@ module github.com/amsatrio/fiber-vue-crud-demo
 
 go 1.25.8
 
-require github.com/goccy/go-json v0.10.6
-
 require (
 	github.com/andybalholm/brotli v1.2.1 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
