@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/amsatrio/fiber-vue-crud-demo/app/modules/health"
 	hello_world "github.com/amsatrio/fiber-vue-crud-demo/app/modules/hello_world"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/static"
@@ -34,6 +35,7 @@ func routes(app *fiber.App) {
 
 	api := app.Group("/v1")
 	hello_world.Router(api)
+	health.Router(api)
 
 	api.Get("/config", func(ctx fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{

@@ -1,0 +1,4 @@
+@base_url=http://127.0.0.1:9001
+
+### health status
+GET {{base_url}}/v1/health/status
