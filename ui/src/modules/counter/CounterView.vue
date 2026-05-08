@@ -15,11 +15,11 @@ const store = useCounterStore()
     </div>
 
     <div class="actions">
-      <button @click="store.increment">
+      <button class="btn btn-primary" @click="store.increment">
         Add 1
       </button>
       
-      <button @click="store.count--">
+      <button class="btn btn-primary" @click="store.count--">
         Subtract 1
       </button>
     </div>
@@ -38,17 +38,4 @@ const store = useCounterStore()
   margin-bottom: 1rem;
 }
 
-button {
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  background-color: #42b883;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #35495e;
-}
 </style>
