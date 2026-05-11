@@ -7,8 +7,9 @@
       <RouterLink to="/counter">Counter</RouterLink>
     </nav>
   </header>
-
-  <RouterView />
+  <main>
+    <router-view></router-view>
+  </main>  
 </template>
 
 <style scoped></style>
