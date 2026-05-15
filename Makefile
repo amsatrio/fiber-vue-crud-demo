@@ -4,7 +4,7 @@ build_ui:
 
 build:
 	mkdir -p bin
-	go build -o bin/app main.go
+	go build -o bin/app local.go
 
 start: build build_ui
 	rm -rf bin/public
@@ -16,3 +16,6 @@ start_vercel: build_ui
 	rm -rf public
 	cp -r ui/dist public
 	vercel dev -d
+
+swag_init:
+	~/go/bin/swag init
