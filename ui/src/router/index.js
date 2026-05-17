@@ -3,7 +3,7 @@ import HomeView from '@/modules/home/home_view.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL || '/'),
   routes: [
     {
       path: '/',
@@ -14,6 +14,17 @@ const router = createRouter({
       path: '/counter',
       name: 'counter',
       component: CounterView
+    },
+    {
+      path: '/hospital',
+      component: () => import('@/modules/hospital/layout.vue'),
+      children: [
+        {
+          path: 'm-biodata', 
+          name: 'm-biodata',
+          component: () => import('@/modules/hospital/m-biodata/view.vue'),
+        }
+      ]
     }
   ],
 })

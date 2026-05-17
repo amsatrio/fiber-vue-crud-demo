@@ -3,40 +3,22 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <main class="home-page">
+  <main>
     <h1>Welcome to the Vue App</h1>
     <p>This is a TypeScript-powered home page.</p>
     
-    <nav>
-      <RouterLink to="/counter" class="nav-link">
-        Go to Counter Page
-      </RouterLink>
-    </nav>
+    <div class="card button-list w-96">
+      <router-link to="/" class="btn btn-primary"> home </router-link>
+      <router-link to="/counter" class="btn btn-primary">counter</router-link>
+      <router-link to="/hospital/m-biodata" class="btn btn-primary">hospital m-biodata</router-link>
+    </div>
   </main>
 </template>
 
 <style scoped>
-.home-page {
+.button-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 60vh;
-  font-family: sans-serif;
-}
-
-.nav-link {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  background-color: #35495e;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: opacity 0.2s;
-}
-
-.nav-link:hover {
-  opacity: 0.9;
+  gap: 10px;
 }
 </style>
