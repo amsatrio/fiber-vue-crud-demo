@@ -2,11 +2,12 @@ package m_admin
 
 import (
 	"errors"
+	"strconv"
+	"sync"
+
 	"github.com/amsatrio/fiber-vue-crud-demo/app/dto/request"
 	"github.com/amsatrio/fiber-vue-crud-demo/app/dto/response"
 	"github.com/amsatrio/fiber-vue-crud-demo/app/util"
-	"strconv"
-	"sync"
 
 	"gorm.io/gorm"
 )

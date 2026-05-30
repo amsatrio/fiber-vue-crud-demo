@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTTokenRepository(initializer.DB)
 	service := NewTTokenService(repo)
 	handler := NewTTokenHandler(service, validate)
-	api := app.Group("/v1/t-token")
-	api.Post("", handler.TTokenCreate)
-	api.Put("", handler.TTokenUpdate)
-	api.Get(":id", handler.TTokenIndex)
-	api.Get("", handler.TTokenPage)
-	api.Delete(":id", handler.TTokenDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-token/:size", handler.GenerateTToken)
+	api.Post("/t-token", handler.TTokenCreate)
+	api.Put("/t-token", handler.TTokenUpdate)
+	api.Get("/t-token/:id", handler.TTokenIndex)
+	api.Get("/t-token", handler.TTokenPage)
+	api.Delete("/t-token/:id", handler.TTokenDelete)
+
+	//api.Get("/generator/t-token/:size", handler.GenerateTToken)
 }

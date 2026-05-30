@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTDoctorOfficeTreatmentPriceRepository(initializer.DB)
 	service := NewTDoctorOfficeTreatmentPriceService(repo)
 	handler := NewTDoctorOfficeTreatmentPriceHandler(service, validate)
-	api := app.Group("/v1/t-doctor-office-treatment-price")
-	api.Post("", handler.TDoctorOfficeTreatmentPriceCreate)
-	api.Put("", handler.TDoctorOfficeTreatmentPriceUpdate)
-	api.Get(":id", handler.TDoctorOfficeTreatmentPriceIndex)
-	api.Get("", handler.TDoctorOfficeTreatmentPricePage)
-	api.Delete(":id", handler.TDoctorOfficeTreatmentPriceDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-doctor-office-treatment-price/:size", handler.GenerateTDoctorOfficeTreatmentPrice)
+	api.Post("/t-doctor-office-treatment-price", handler.TDoctorOfficeTreatmentPriceCreate)
+	api.Put("/t-doctor-office-treatment-price", handler.TDoctorOfficeTreatmentPriceUpdate)
+	api.Get("/t-doctor-office-treatment-price/:id", handler.TDoctorOfficeTreatmentPriceIndex)
+	api.Get("/t-doctor-office-treatment-price", handler.TDoctorOfficeTreatmentPricePage)
+	api.Delete("/t-doctor-office-treatment-price/:id", handler.TDoctorOfficeTreatmentPriceDelete)
+
+	//api.Get("/generator/t-doctor-office-treatment-price/:size", handler.GenerateTDoctorOfficeTreatmentPrice)
 }

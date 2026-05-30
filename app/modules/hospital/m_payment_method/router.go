@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMPaymentMethodRepository(initializer.DB)
 	service := NewMPaymentMethodService(repo)
 	handler := NewMPaymentMethodHandler(service, validate)
-	api := app.Group("/v1/m-payment-method")
-	api.Post("", handler.MPaymentMethodCreate)
-	api.Put("", handler.MPaymentMethodUpdate)
-	api.Get(":id", handler.MPaymentMethodIndex)
-	api.Get("", handler.MPaymentMethodPage)
-	api.Delete(":id", handler.MPaymentMethodDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-payment-method/:size", handler.GenerateMPaymentMethod)
+	api.Post("/m-payment-method", handler.MPaymentMethodCreate)
+	api.Put("/m-payment-method", handler.MPaymentMethodUpdate)
+	api.Get("/m-payment-method/:id", handler.MPaymentMethodIndex)
+	api.Get("/m-payment-method", handler.MPaymentMethodPage)
+	api.Delete("/m-payment-method/:id", handler.MPaymentMethodDelete)
+
+	//api.Get("/generator/m-payment-method/:size", handler.GenerateMPaymentMethod)
 }

@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMWalletDefaultNominalRepository(initializer.DB)
 	service := NewMWalletDefaultNominalService(repo)
 	handler := NewMWalletDefaultNominalHandler(service, validate)
-	api := app.Group("/v1/m-wallet-default-nominal")
-	api.Post("", handler.MWalletDefaultNominalCreate)
-	api.Put("", handler.MWalletDefaultNominalUpdate)
-	api.Get(":id", handler.MWalletDefaultNominalIndex)
-	api.Get("", handler.MWalletDefaultNominalPage)
-	api.Delete(":id", handler.MWalletDefaultNominalDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-wallet-default-nominal/:size", handler.GenerateMWalletDefaultNominal)
+	api.Post("/m-wallet-default-nominal", handler.MWalletDefaultNominalCreate)
+	api.Put("/m-wallet-default-nominal", handler.MWalletDefaultNominalUpdate)
+	api.Get("/m-wallet-default-nominal/:id", handler.MWalletDefaultNominalIndex)
+	api.Get("/m-wallet-default-nominal", handler.MWalletDefaultNominalPage)
+	api.Delete("/m-wallet-default-nominal/:id", handler.MWalletDefaultNominalDelete)
+
+	//api.Get("/generator/m-wallet-default-nominal/:size", handler.GenerateMWalletDefaultNominal)
 }

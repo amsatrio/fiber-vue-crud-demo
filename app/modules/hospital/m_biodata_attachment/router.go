@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMBiodataAttachmentRepository(initializer.DB)
 	service := NewMBiodataAttachmentService(repo)
 	handler := NewMBiodataAttachmentHandler(service, validate)
-	api := app.Group("/v1/m-biodata-attachment")
-	api.Post("", handler.MBiodataAttachmentCreate)
-	api.Put("", handler.MBiodataAttachmentUpdate)
-	api.Get(":id", handler.MBiodataAttachmentIndex)
-	api.Get("", handler.MBiodataAttachmentPage)
-	api.Delete(":id", handler.MBiodataAttachmentDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-biodata-attachment/:size", handler.GenerateMBiodataAttachment)
+	api.Post("/m-biodata-attachment", handler.MBiodataAttachmentCreate)
+	api.Put("/m-biodata-attachment", handler.MBiodataAttachmentUpdate)
+	api.Get("/m-biodata-attachment/:id", handler.MBiodataAttachmentIndex)
+	api.Get("/m-biodata-attachment", handler.MBiodataAttachmentPage)
+	api.Delete("/m-biodata-attachment/:id", handler.MBiodataAttachmentDelete)
+
+	//api.Get("/generator/m-biodata-attachment/:size", handler.GenerateMBiodataAttachment)
 }

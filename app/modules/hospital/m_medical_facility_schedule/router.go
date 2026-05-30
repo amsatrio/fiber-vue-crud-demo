@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMMedicalFacilityScheduleRepository(initializer.DB)
 	service := NewMMedicalFacilityScheduleService(repo)
 	handler := NewMMedicalFacilityScheduleHandler(service, validate)
-	api := app.Group("/v1/m-medical-facility-schedule")
-	api.Post("", handler.MMedicalFacilityScheduleCreate)
-	api.Put("", handler.MMedicalFacilityScheduleUpdate)
-	api.Get(":id", handler.MMedicalFacilityScheduleIndex)
-	api.Get("", handler.MMedicalFacilitySchedulePage)
-	api.Delete(":id", handler.MMedicalFacilityScheduleDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-medical-facility-schedule/:size", handler.GenerateMMedicalFacilitySchedule)
+	api.Post("/m-medical-facility-schedule", handler.MMedicalFacilityScheduleCreate)
+	api.Put("/m-medical-facility-schedule", handler.MMedicalFacilityScheduleUpdate)
+	api.Get("/m-medical-facility-schedule/:id", handler.MMedicalFacilityScheduleIndex)
+	api.Get("/m-medical-facility-schedule", handler.MMedicalFacilitySchedulePage)
+	api.Delete("/m-medical-facility-schedule/:id", handler.MMedicalFacilityScheduleDelete)
+
+	//api.Get("/generator/m-medical-facility-schedule/:size", handler.GenerateMMedicalFacilitySchedule)
 }

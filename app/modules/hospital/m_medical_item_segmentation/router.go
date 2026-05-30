@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMMedicalItemSegmentationRepository(initializer.DB)
 	service := NewMMedicalItemSegmentationService(repo)
 	handler := NewMMedicalItemSegmentationHandler(service, validate)
-	api := app.Group("/v1/m-medical-item-segmentation")
-	api.Post("", handler.MMedicalItemSegmentationCreate)
-	api.Put("", handler.MMedicalItemSegmentationUpdate)
-	api.Get(":id", handler.MMedicalItemSegmentationIndex)
-	api.Get("", handler.MMedicalItemSegmentationPage)
-	api.Delete(":id", handler.MMedicalItemSegmentationDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-medical-item-segmentation/:size", handler.GenerateMMedicalItemSegmentation)
+	api.Post("/m-medical-item-segmentation", handler.MMedicalItemSegmentationCreate)
+	api.Put("/m-medical-item-segmentation", handler.MMedicalItemSegmentationUpdate)
+	api.Get("/m-medical-item-segmentation/:id", handler.MMedicalItemSegmentationIndex)
+	api.Get("/m-medical-item-segmentation", handler.MMedicalItemSegmentationPage)
+	api.Delete("/m-medical-item-segmentation/:id", handler.MMedicalItemSegmentationDelete)
+
+	//api.Get("/generator/m-medical-item-segmentation/:size", handler.GenerateMMedicalItemSegmentation)
 }

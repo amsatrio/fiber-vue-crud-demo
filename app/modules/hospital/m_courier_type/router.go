@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMCourierTypeRepository(initializer.DB)
 	service := NewMCourierTypeService(repo)
 	handler := NewMCourierTypeHandler(service, validate)
-	api := app.Group("/v1/m-courier-type")
-	api.Post("", handler.MCourierTypeCreate)
-	api.Put("", handler.MCourierTypeUpdate)
-	api.Get(":id", handler.MCourierTypeIndex)
-	api.Get("", handler.MCourierTypePage)
-	api.Delete(":id", handler.MCourierTypeDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-courier-type/:size", handler.GenerateMCourierType)
+	api.Post("/m-courier-type", handler.MCourierTypeCreate)
+	api.Put("/m-courier-type", handler.MCourierTypeUpdate)
+	api.Get("/m-courier-type/:id", handler.MCourierTypeIndex)
+	api.Get("/m-courier-type", handler.MCourierTypePage)
+	api.Delete("/m-courier-type/:id", handler.MCourierTypeDelete)
+
+	//api.Get("/generator/m-courier-type/:size", handler.GenerateMCourierType)
 }

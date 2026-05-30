@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTDoctorOfficeScheduleRepository(initializer.DB)
 	service := NewTDoctorOfficeScheduleService(repo)
 	handler := NewTDoctorOfficeScheduleHandler(service, validate)
-	api := app.Group("/v1/t-doctor-office-schedule")
-	api.Post("", handler.TDoctorOfficeScheduleCreate)
-	api.Put("", handler.TDoctorOfficeScheduleUpdate)
-	api.Get(":id", handler.TDoctorOfficeScheduleIndex)
-	api.Get("", handler.TDoctorOfficeSchedulePage)
-	api.Delete(":id", handler.TDoctorOfficeScheduleDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-doctor-office-schedule/:size", handler.GenerateTDoctorOfficeSchedule)
+	api.Post("/t-doctor-office-schedule", handler.TDoctorOfficeScheduleCreate)
+	api.Put("/t-doctor-office-schedule", handler.TDoctorOfficeScheduleUpdate)
+	api.Get("/t-doctor-office-schedule/:id", handler.TDoctorOfficeScheduleIndex)
+	api.Get("/t-doctor-office-schedule", handler.TDoctorOfficeSchedulePage)
+	api.Delete("/t-doctor-office-schedule/:id", handler.TDoctorOfficeScheduleDelete)
+
+	//api.Get("/generator/t-doctor-office-schedule/:size", handler.GenerateTDoctorOfficeSchedule)
 }

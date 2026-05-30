@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerChatHistoryRepository(initializer.DB)
 	service := NewTCustomerChatHistoryService(repo)
 	handler := NewTCustomerChatHistoryHandler(service, validate)
-	api := app.Group("/v1/t-customer-chat-history")
-	api.Post("", handler.TCustomerChatHistoryCreate)
-	api.Put("", handler.TCustomerChatHistoryUpdate)
-	api.Get(":id", handler.TCustomerChatHistoryIndex)
-	api.Get("", handler.TCustomerChatHistoryPage)
-	api.Delete(":id", handler.TCustomerChatHistoryDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-chat-history/:size", handler.GenerateTCustomerChatHistory)
+	api.Post("/t-customer-chat-history", handler.TCustomerChatHistoryCreate)
+	api.Put("/t-customer-chat-history", handler.TCustomerChatHistoryUpdate)
+	api.Get("/t-customer-chat-history/:id", handler.TCustomerChatHistoryIndex)
+	api.Get("/t-customer-chat-history", handler.TCustomerChatHistoryPage)
+	api.Delete("/t-customer-chat-history/:id", handler.TCustomerChatHistoryDelete)
+
+	//api.Get("/generator/t-customer-chat-history/:size", handler.GenerateTCustomerChatHistory)
 }

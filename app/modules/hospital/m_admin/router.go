@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMAdminRepository(initializer.DB)
 	service := NewMAdminService(repo)
 	handler := NewMAdminHandler(service, validate)
-	api := app.Group("/v1/m-admin")
-	api.Post("", handler.MAdminCreate)
-	api.Put("", handler.MAdminUpdate)
-	api.Get(":id", handler.MAdminIndex)
-	api.Get("", handler.MAdminPage)
-	api.Delete(":id", handler.MAdminDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-admin/:size", handler.GenerateMAdmin)
+	api.Post("/m-admin", handler.MAdminCreate)
+	api.Put("/m-admin", handler.MAdminUpdate)
+	api.Get("/m-admin/:id", handler.MAdminIndex)
+	api.Get("/m-admin", handler.MAdminPage)
+	api.Delete("/m-admin/:id", handler.MAdminDelete)
+
+	//api.Get("/generator/m-admin/:size", handler.GenerateMAdmin)
 }

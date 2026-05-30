@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerCustomNominalRepository(initializer.DB)
 	service := NewTCustomerCustomNominalService(repo)
 	handler := NewTCustomerCustomNominalHandler(service, validate)
-	api := app.Group("/v1/t-customer-custom-nominal")
-	api.Post("", handler.TCustomerCustomNominalCreate)
-	api.Put("", handler.TCustomerCustomNominalUpdate)
-	api.Get(":id", handler.TCustomerCustomNominalIndex)
-	api.Get("", handler.TCustomerCustomNominalPage)
-	api.Delete(":id", handler.TCustomerCustomNominalDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-custom-nominal/:size", handler.GenerateTCustomerCustomNominal)
+	api.Post("/t-customer-custom-nominal", handler.TCustomerCustomNominalCreate)
+	api.Put("/t-customer-custom-nominal", handler.TCustomerCustomNominalUpdate)
+	api.Get("/t-customer-custom-nominal/:id", handler.TCustomerCustomNominalIndex)
+	api.Get("/t-customer-custom-nominal", handler.TCustomerCustomNominalPage)
+	api.Delete("/t-customer-custom-nominal/:id", handler.TCustomerCustomNominalDelete)
+
+	//api.Get("/generator/t-customer-custom-nominal/:size", handler.GenerateTCustomerCustomNominal)
 }

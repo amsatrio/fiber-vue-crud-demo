@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerVaHistoryRepository(initializer.DB)
 	service := NewTCustomerVaHistoryService(repo)
 	handler := NewTCustomerVaHistoryHandler(service, validate)
-	api := app.Group("/v1/t-customer-va-history")
-	api.Post("", handler.TCustomerVaHistoryCreate)
-	api.Put("", handler.TCustomerVaHistoryUpdate)
-	api.Get(":id", handler.TCustomerVaHistoryIndex)
-	api.Get("", handler.TCustomerVaHistoryPage)
-	api.Delete(":id", handler.TCustomerVaHistoryDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-va-history/:size", handler.GenerateTCustomerVaHistory)
+	api.Post("/t-customer-va-history", handler.TCustomerVaHistoryCreate)
+	api.Put("/t-customer-va-history", handler.TCustomerVaHistoryUpdate)
+	api.Get("/t-customer-va-history/:id", handler.TCustomerVaHistoryIndex)
+	api.Get("/t-customer-va-history", handler.TCustomerVaHistoryPage)
+	api.Delete("/t-customer-va-history/:id", handler.TCustomerVaHistoryDelete)
+
+	//api.Get("/generator/t-customer-va-history/:size", handler.GenerateTCustomerVaHistory)
 }

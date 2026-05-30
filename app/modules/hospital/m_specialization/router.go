@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMSpecializationRepository(initializer.DB)
 	service := NewMSpecializationService(repo)
 	handler := NewMSpecializationHandler(service, validate)
-	api := app.Group("/v1/m-specialization")
-	api.Post("", handler.MSpecializationCreate)
-	api.Put("", handler.MSpecializationUpdate)
-	api.Get(":id", handler.MSpecializationIndex)
-	api.Get("", handler.MSpecializationPage)
-	api.Delete(":id", handler.MSpecializationDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-specialization/:size", handler.GenerateMSpecialization)
+	api.Post("/m-specialization", handler.MSpecializationCreate)
+	api.Put("/m-specialization", handler.MSpecializationUpdate)
+	api.Get("/m-specialization/:id", handler.MSpecializationIndex)
+	api.Get("/m-specialization", handler.MSpecializationPage)
+	api.Delete("/m-specialization/:id", handler.MSpecializationDelete)
+
+	//api.Get("/generator/m-specialization/:size", handler.GenerateMSpecialization)
 }

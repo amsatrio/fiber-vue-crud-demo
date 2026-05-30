@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTAppointmentRescheduleHistoryRepository(initializer.DB)
 	service := NewTAppointmentRescheduleHistoryService(repo)
 	handler := NewTAppointmentRescheduleHistoryHandler(service, validate)
-	api := app.Group("/v1/t-appointment-reschedule-history")
-	api.Post("", handler.TAppointmentRescheduleHistoryCreate)
-	api.Put("", handler.TAppointmentRescheduleHistoryUpdate)
-	api.Get(":id", handler.TAppointmentRescheduleHistoryIndex)
-	api.Get("", handler.TAppointmentRescheduleHistoryPage)
-	api.Delete(":id", handler.TAppointmentRescheduleHistoryDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-appointment-reschedule-history/:size", handler.GenerateTAppointmentRescheduleHistory)
+	api.Post("/t-appointment-reschedule-history", handler.TAppointmentRescheduleHistoryCreate)
+	api.Put("/t-appointment-reschedule-history", handler.TAppointmentRescheduleHistoryUpdate)
+	api.Get("/t-appointment-reschedule-history/:id", handler.TAppointmentRescheduleHistoryIndex)
+	api.Get("/t-appointment-reschedule-history", handler.TAppointmentRescheduleHistoryPage)
+	api.Delete("/t-appointment-reschedule-history/:id", handler.TAppointmentRescheduleHistoryDelete)
+
+	//api.Get("/generator/t-appointment-reschedule-history/:size", handler.GenerateTAppointmentRescheduleHistory)
 }

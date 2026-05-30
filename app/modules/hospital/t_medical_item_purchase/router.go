@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTMedicalItemPurchaseRepository(initializer.DB)
 	service := NewTMedicalItemPurchaseService(repo)
 	handler := NewTMedicalItemPurchaseHandler(service, validate)
-	api := app.Group("/v1/t-medical-item-purchase")
-	api.Post("", handler.TMedicalItemPurchaseCreate)
-	api.Put("", handler.TMedicalItemPurchaseUpdate)
-	api.Get(":id", handler.TMedicalItemPurchaseIndex)
-	api.Get("", handler.TMedicalItemPurchasePage)
-	api.Delete(":id", handler.TMedicalItemPurchaseDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-medical-item-purchase/:size", handler.GenerateTMedicalItemPurchase)
+	api.Post("/t-medical-item-purchase", handler.TMedicalItemPurchaseCreate)
+	api.Put("/t-medical-item-purchase", handler.TMedicalItemPurchaseUpdate)
+	api.Get("/t-medical-item-purchase/:id", handler.TMedicalItemPurchaseIndex)
+	api.Get("/t-medical-item-purchase", handler.TMedicalItemPurchasePage)
+	api.Delete("/t-medical-item-purchase/:id", handler.TMedicalItemPurchaseDelete)
+
+	//api.Get("/generator/t-medical-item-purchase/:size", handler.GenerateTMedicalItemPurchase)
 }

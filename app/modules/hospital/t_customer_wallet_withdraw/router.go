@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerWalletWithdrawRepository(initializer.DB)
 	service := NewTCustomerWalletWithdrawService(repo)
 	handler := NewTCustomerWalletWithdrawHandler(service, validate)
-	api := app.Group("/v1/t-customer-wallet-withdraw")
-	api.Post("", handler.TCustomerWalletWithdrawCreate)
-	api.Put("", handler.TCustomerWalletWithdrawUpdate)
-	api.Get(":id", handler.TCustomerWalletWithdrawIndex)
-	api.Get("", handler.TCustomerWalletWithdrawPage)
-	api.Delete(":id", handler.TCustomerWalletWithdrawDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-wallet-withdraw/:size", handler.GenerateTCustomerWalletWithdraw)
+	api.Post("/t-customer-wallet-withdraw", handler.TCustomerWalletWithdrawCreate)
+	api.Put("/t-customer-wallet-withdraw", handler.TCustomerWalletWithdrawUpdate)
+	api.Get("/t-customer-wallet-withdraw/:id", handler.TCustomerWalletWithdrawIndex)
+	api.Get("/t-customer-wallet-withdraw", handler.TCustomerWalletWithdrawPage)
+	api.Delete("/t-customer-wallet-withdraw/:id", handler.TCustomerWalletWithdrawDelete)
+
+	//api.Get("/generator/t-customer-wallet-withdraw/:size", handler.GenerateTCustomerWalletWithdraw)
 }

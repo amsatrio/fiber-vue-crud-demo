@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMDoctorRepository(initializer.DB)
 	service := NewMDoctorService(repo)
 	handler := NewMDoctorHandler(service, validate)
-	api := app.Group("/v1/m-doctor")
-	api.Post("", handler.MDoctorCreate)
-	api.Put("", handler.MDoctorUpdate)
-	api.Get(":id", handler.MDoctorIndex)
-	api.Get("", handler.MDoctorPage)
-	api.Delete(":id", handler.MDoctorDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-doctor/:size", handler.GenerateMDoctor)
+	api.Post("/m-doctor", handler.MDoctorCreate)
+	api.Put("/m-doctor", handler.MDoctorUpdate)
+	api.Get("/m-doctor/:id", handler.MDoctorIndex)
+	api.Get("/m-doctor", handler.MDoctorPage)
+	api.Delete("/m-doctor/:id", handler.MDoctorDelete)
+
+	//api.Get("/generator/m-doctor/:size", handler.GenerateMDoctor)
 }

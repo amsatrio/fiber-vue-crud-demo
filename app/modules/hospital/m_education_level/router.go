@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMEducationLevelRepository(initializer.DB)
 	service := NewMEducationLevelService(repo)
 	handler := NewMEducationLevelHandler(service, validate)
-	api := app.Group("/v1/m-education-level")
-	api.Post("", handler.MEducationLevelCreate)
-	api.Put("", handler.MEducationLevelUpdate)
-	api.Get(":id", handler.MEducationLevelIndex)
-	api.Get("", handler.MEducationLevelPage)
-	api.Delete(":id", handler.MEducationLevelDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-education-level/:size", handler.GenerateMEducationLevel)
+	api.Post("/m-education-level", handler.MEducationLevelCreate)
+	api.Put("/m-education-level", handler.MEducationLevelUpdate)
+	api.Get("/m-education-level/:id", handler.MEducationLevelIndex)
+	api.Get("/m-education-level", handler.MEducationLevelPage)
+	api.Delete("/m-education-level/:id", handler.MEducationLevelDelete)
+
+	//api.Get("/generator/m-education-level/:size", handler.GenerateMEducationLevel)
 }

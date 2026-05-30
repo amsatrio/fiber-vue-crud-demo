@@ -1,9 +1,10 @@
 package m_admin
 
 import (
-	"github.com/amsatrio/fiber-vue-crud-demo/app/dto"
 	"sync"
 	"time"
+
+	"github.com/amsatrio/fiber-vue-crud-demo/app/dto"
 )
 
 type MAdmin struct {

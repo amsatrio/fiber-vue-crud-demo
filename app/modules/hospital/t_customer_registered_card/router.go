@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerRegisteredCardRepository(initializer.DB)
 	service := NewTCustomerRegisteredCardService(repo)
 	handler := NewTCustomerRegisteredCardHandler(service, validate)
-	api := app.Group("/v1/t-customer-registered-card")
-	api.Post("", handler.TCustomerRegisteredCardCreate)
-	api.Put("", handler.TCustomerRegisteredCardUpdate)
-	api.Get(":id", handler.TCustomerRegisteredCardIndex)
-	api.Get("", handler.TCustomerRegisteredCardPage)
-	api.Delete(":id", handler.TCustomerRegisteredCardDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-registered-card/:size", handler.GenerateTCustomerRegisteredCard)
+	api.Post("/t-customer-registered-card", handler.TCustomerRegisteredCardCreate)
+	api.Put("/t-customer-registered-card", handler.TCustomerRegisteredCardUpdate)
+	api.Get("/t-customer-registered-card/:id", handler.TCustomerRegisteredCardIndex)
+	api.Get("/t-customer-registered-card", handler.TCustomerRegisteredCardPage)
+	api.Delete("/t-customer-registered-card/:id", handler.TCustomerRegisteredCardDelete)
+
+	//api.Get("/generator/t-customer-registered-card/:size", handler.GenerateTCustomerRegisteredCard)
 }

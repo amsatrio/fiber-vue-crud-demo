@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerWalletTopUpRepository(initializer.DB)
 	service := NewTCustomerWalletTopUpService(repo)
 	handler := NewTCustomerWalletTopUpHandler(service, validate)
-	api := app.Group("/v1/t-customer-wallet-top-up")
-	api.Post("", handler.TCustomerWalletTopUpCreate)
-	api.Put("", handler.TCustomerWalletTopUpUpdate)
-	api.Get(":id", handler.TCustomerWalletTopUpIndex)
-	api.Get("", handler.TCustomerWalletTopUpPage)
-	api.Delete(":id", handler.TCustomerWalletTopUpDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-customer-wallet-top-up/:size", handler.GenerateTCustomerWalletTopUp)
+	api.Post("/t-customer-wallet-top-up", handler.TCustomerWalletTopUpCreate)
+	api.Put("/t-customer-wallet-top-up", handler.TCustomerWalletTopUpUpdate)
+	api.Get("/t-customer-wallet-top-up/:id", handler.TCustomerWalletTopUpIndex)
+	api.Get("/t-customer-wallet-top-up", handler.TCustomerWalletTopUpPage)
+	api.Delete("/t-customer-wallet-top-up/:id", handler.TCustomerWalletTopUpDelete)
+
+	//api.Get("/generator/t-customer-wallet-top-up/:size", handler.GenerateTCustomerWalletTopUp)
 }

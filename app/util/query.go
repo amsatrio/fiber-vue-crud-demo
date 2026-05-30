@@ -65,7 +65,7 @@ func ApplyGlobalSearch(db *gorm.DB, search string, modelMap map[string]string) *
 	searchQuery := ""
 	for key, value := range modelMap {
 		// Log("INFO", "util", "ApplyGlobalSearch", "key: "+key+", value: "+value)
-		if value != "string" {
+		if value != "*string" {
 			continue
 		}
 
@@ -76,9 +76,8 @@ func ApplyGlobalSearch(db *gorm.DB, search string, modelMap map[string]string) *
 		}
 		searchQuery = searchQuery + key + " like " + "'%" + search + "%'"
 	}
-	if search != "" {
-		db = db.Where(searchQuery)
-	}
+	db = db.Where(searchQuery)
+
 	return db
 }
 

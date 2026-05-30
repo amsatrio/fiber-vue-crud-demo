@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMMedicalItemCategoryRepository(initializer.DB)
 	service := NewMMedicalItemCategoryService(repo)
 	handler := NewMMedicalItemCategoryHandler(service, validate)
-	api := app.Group("/v1/m-medical-item-category")
-	api.Post("", handler.MMedicalItemCategoryCreate)
-	api.Put("", handler.MMedicalItemCategoryUpdate)
-	api.Get(":id", handler.MMedicalItemCategoryIndex)
-	api.Get("", handler.MMedicalItemCategoryPage)
-	api.Delete(":id", handler.MMedicalItemCategoryDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-medical-item-category/:size", handler.GenerateMMedicalItemCategory)
+	api.Post("/m-medical-item-category", handler.MMedicalItemCategoryCreate)
+	api.Put("/m-medical-item-category", handler.MMedicalItemCategoryUpdate)
+	api.Get("/m-medical-item-category/:id", handler.MMedicalItemCategoryIndex)
+	api.Get("/m-medical-item-category", handler.MMedicalItemCategoryPage)
+	api.Delete("/m-medical-item-category/:id", handler.MMedicalItemCategoryDelete)
+
+	//api.Get("/generator/m-medical-item-category/:size", handler.GenerateMMedicalItemCategory)
 }

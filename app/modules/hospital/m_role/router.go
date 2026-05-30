@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMRoleRepository(initializer.DB)
 	service := NewMRoleService(repo)
 	handler := NewMRoleHandler(service, validate)
-	api := app.Group("/v1/m-role")
-	api.Post("", handler.MRoleCreate)
-	api.Put("", handler.MRoleUpdate)
-	api.Get(":id", handler.MRoleIndex)
-	api.Get("", handler.MRolePage)
-	api.Delete(":id", handler.MRoleDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-role/:size", handler.GenerateMRole)
+	api.Post("/m-role", handler.MRoleCreate)
+	api.Put("/m-role", handler.MRoleUpdate)
+	api.Get("/m-role/:id", handler.MRoleIndex)
+	api.Get("/m-role", handler.MRolePage)
+	api.Delete("/m-role/:id", handler.MRoleDelete)
+
+	//api.Get("/generator/m-role/:size", handler.GenerateMRole)
 }

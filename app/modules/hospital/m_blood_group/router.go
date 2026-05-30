@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMBloodGroupRepository(initializer.DB)
 	service := NewMBloodGroupService(repo)
 	handler := NewMBloodGroupHandler(service, validate)
-	api := app.Group("/v1/m-blood-group")
-	api.Post("", handler.MBloodGroupCreate)
-	api.Put("", handler.MBloodGroupUpdate)
-	api.Get(":id", handler.MBloodGroupIndex)
-	api.Get("", handler.MBloodGroupPage)
-	api.Delete(":id", handler.MBloodGroupDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/m-blood-group/:size", handler.GenerateMBloodGroup)
+	api.Post("/m-blood-group", handler.MBloodGroupCreate)
+	api.Put("/m-blood-group", handler.MBloodGroupUpdate)
+	api.Get("/m-blood-group/:id", handler.MBloodGroupIndex)
+	api.Get("/m-blood-group", handler.MBloodGroupPage)
+	api.Delete("/m-blood-group/:id", handler.MBloodGroupDelete)
+
+	//api.Get("/generator/m-blood-group/:size", handler.GenerateMBloodGroup)
 }

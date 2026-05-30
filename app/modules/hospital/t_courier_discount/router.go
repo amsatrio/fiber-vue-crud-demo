@@ -7,17 +7,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func GetRouter(app *fiber.App, validate *validator.Validate) {
+func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCourierDiscountRepository(initializer.DB)
 	service := NewTCourierDiscountService(repo)
 	handler := NewTCourierDiscountHandler(service, validate)
-	api := app.Group("/v1/t-courier-discount")
-	api.Post("", handler.TCourierDiscountCreate)
-	api.Put("", handler.TCourierDiscountUpdate)
-	api.Get(":id", handler.TCourierDiscountIndex)
-	api.Get("", handler.TCourierDiscountPage)
-	api.Delete(":id", handler.TCourierDiscountDelete)
 
-	//generatorApi := app.Group("/v1/generator")
-	//generatorApi.Get("/t-courier-discount/:size", handler.GenerateTCourierDiscount)
+	api.Post("/t-courier-discount", handler.TCourierDiscountCreate)
+	api.Put("/t-courier-discount", handler.TCourierDiscountUpdate)
+	api.Get("/t-courier-discount/:id", handler.TCourierDiscountIndex)
+	api.Get("/t-courier-discount", handler.TCourierDiscountPage)
+	api.Delete("/t-courier-discount/:id", handler.TCourierDiscountDelete)
+
+	//api.Get("/generator/t-courier-discount/:size", handler.GenerateTCourierDiscount)
 }
