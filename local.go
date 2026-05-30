@@ -17,6 +17,7 @@ func init() {
 	initializer.LoadEnvironmentVariables()
 	initializer.LoggerInit()
 	initializer.InitializeDatabase()
+	initializer.InitializeDatabaseFileManagement()
 }
 
 func main() {
