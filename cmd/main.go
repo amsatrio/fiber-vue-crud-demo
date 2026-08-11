@@ -51,8 +51,6 @@ func Config() fiber.Config {
 func Routes(app *fiber.App) {
 	app.Get("/swagger/*", swaggo.HandlerDefault)
 
-	app.Get("/*", static.New("./public"))
-
 	api := app.Group("/v1")
 	hello_world.Router(api)
 	health.Router(api)
@@ -63,6 +61,12 @@ func Routes(app *fiber.App) {
 			"SERVER_PORT": os.Getenv("SERVER_PORT"),
 		})
 	})
+
+	// Static assets
+	app.Get("/*", static.New("./public"))
+
+	// SPA fallback  -  catches everything else
+	app.Get("*", static.New("./public/index.html"))
 }
 
 func LoadEnv() error {
