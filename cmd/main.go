@@ -15,13 +15,11 @@ import (
 	"github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/static"
-	"github.com/gofiber/template/html/v2"
 )
 
 func Config() fiber.Config {
-	htmlEngine := html.New("./web/templates", ".html")
+	// htmlEngine := html.New("./web/templates", ".html")
 	return fiber.Config{
-		// Prefork:               true,
 		CaseSensitive: true,
 		StrictRouting: true,
 		BodyLimit:     4 * 1024 * 1024,
@@ -43,8 +41,8 @@ func Config() fiber.Config {
 
 			return c.Status(code).JSON(res)
 		},
-		Views:       htmlEngine,
-		ViewsLayout: "layouts/main",
+		// Views:       htmlEngine,
+		// ViewsLayout: "layouts/main",
 	}
 }
 

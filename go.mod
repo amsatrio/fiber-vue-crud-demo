@@ -37,7 +37,6 @@ require (
 	github.com/gofiber/contrib/v3/swaggo v1.0.6
 	github.com/gofiber/fiber/v3 v3.2.0 // indirect
 	github.com/gofiber/schema v1.7.1 // indirect
-	github.com/gofiber/template/html/v2 v2.1.3
 	github.com/gofiber/utils/v2 v2.0.5 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
