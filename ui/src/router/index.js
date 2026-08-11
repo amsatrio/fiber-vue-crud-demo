@@ -20,11 +20,16 @@ const router = createRouter({
       component: () => import('@/modules/hospital/layout.vue'),
       children: [
         {
-          path: 'm-biodata', 
+          path: 'm-biodata',
           name: 'm-biodata',
           component: () => import('@/modules/hospital/m-biodata/view.vue'),
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/modules/errors/not-found.vue')
     }
   ],
 })
