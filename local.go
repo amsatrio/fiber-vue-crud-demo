@@ -41,5 +41,5 @@ func main() {
 	util.Log("INFO", "root", "main", "listen and serve on "+host+" port "+port)
 
 	// ### Run
-	log.Fatal(app.Listen(host + ":" + port))
+	log.Fatal(app.Listen(host+":"+port, fiber.ListenConfig{EnablePrefork: true}))
 }
