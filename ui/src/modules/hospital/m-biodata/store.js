@@ -1,7 +1,6 @@
-
 import { defineStore } from 'pinia';
 
-let base_url = "http://localhost:9001/v1/m-biodata";
+let base_url = "http://localhost:9001/v1/hospital/m-biodata";
 
 export const useMBiodataStore = defineStore('mbiodata', {
     state: () => ({
@@ -35,14 +34,29 @@ export const useMBiodataStore = defineStore('mbiodata', {
         async saveData(id) {
             this.loading = true;
             const method = id ? 'PUT' : 'POST';
-            const url = id ? base_url : base_url;
+            const url = base_url;
+
+            // Build multipart form data
+            const formData = new FormData();
+            if (id) formData.append('id', id.toString());
+            if (this.data.fullname) formData.append('fullname', this.data.fullname);
+            if (this.data.mobilePhone) formData.append('mobilePhone', this.data.mobilePhone);
+            if (this.data.imagePath) formData.append('imagePath', this.data.imagePath);
+            
+            // Append file if selected
+            if (this.data.image) {
+                formData.append('image', this.data.image);
+            }
+
             try {
                 await fetch(url, {
                     method: method,
-                    body: JSON.stringify(id ? { id, ...this.data } : this.data),
-                    headers: { 'Content-type': 'application/json' },
+                    // Note: Do NOT set Content-Type header manually for FormData; 
+                    // the browser automatically sets multipart/form-data with the boundary.
+                    body: formData,
+                    // headers: { 'Content-type': 'application/json' },
                 });
-                await this.fetchPageData();
+                await this.fetchPageData(this.pagination.number, this.pagination.size);
             } finally {
                 this.loading = false;
             }
@@ -51,7 +65,7 @@ export const useMBiodataStore = defineStore('mbiodata', {
             this.loading = true;
             try {
                 await fetch(`${base_url}/${id}`, { method: 'DELETE' });
-                await this.fetchPageData();
+                await this.fetchPageData(this.pagination.number, this.pagination.size);
             } finally {
                 this.loading = false;
             }

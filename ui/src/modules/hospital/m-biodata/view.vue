@@ -5,6 +5,10 @@ import { computed, onMounted, ref } from 'vue';
 const store = useMBiodataStore();
 const isEdit = ref(false);
 const selectedId = ref<number | null>(null);
+const imagePreview = ref<string | null>(null);
+
+// Dedicated state for showing full details
+const selectedItem = ref<any>(null);
 
 onMounted(() => store.fetchPageData());
 
@@ -43,11 +47,31 @@ const paginationRange = computed(() => {
   return rangeWithDots;
 });
 
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files[0]) {
+    const file = target.files[0];
+    store.data.image = file;
+    imagePreview.value = URL.createObjectURL(file);
+  }
+};
+
+// Open Detail View Modal
+const openDetailModal = (item: any) => {
+  selectedItem.value = item;
+  (document.getElementById('biodata_detail_modal') as HTMLDialogElement).showModal();
+};
+
+// Open Create/Edit Form Modal
 const openModal = (item: any = null) => {
+  imagePreview.value = null;
   if (item) {
     isEdit.value = true;
     selectedId.value = item.id;
-    store.data = { ...item };
+    store.data = { ...item, image: null };
+    if (item.imagePath) {
+      imagePreview.value = item.imagePath;
+    }
   } else {
     isEdit.value = false;
     selectedId.value = null;
@@ -80,6 +104,7 @@ const handleDelete = async (id: number) => {
         <thead>
           <tr class="bg-base-200">
             <th>ID</th>
+            <th>Avatar</th>
             <th>Fullname</th>
             <th>Mobile</th>
             <th>Path</th>
@@ -87,15 +112,25 @@ const handleDelete = async (id: number) => {
           </tr>
         </thead>
         <tbody>
-          <tr v-if="store.loading"><td colspan="5" class="text-center py-4 text-info">Loading...</td></tr>
+          <tr v-if="store.loading">
+            <td colspan="6" class="text-center py-4 text-info">Loading...</td>
+          </tr>
           <tr v-for="data in store.pagedata" :key="data.id" class="hover">
             <th>{{ data.id }}</th>
+            <td>
+              <div class="avatar">
+                <div class="w-12 h-12 rounded-full border overflow-hidden">
+                  <img :src="'data:image/png;base64,' + data.image" alt="Avatar" class="object-cover w-full h-full" />
+                </div>
+              </div>
+            </td>
             <td class="font-medium">{{ data.fullname }}</td>
             <td>{{ data.mobilePhone }}</td>
             <td><span class="badge badge-ghost">{{ data.imagePath || 'N/A' }}</span></td>
             <td>
               <div class="flex justify-center gap-2">
-                <button @click="openModal(data)" class="btn btn-sm btn-success btn-outline">Details</button>
+                <!-- Connected Details button to openDetailModal -->
+                <button @click="openDetailModal(data)" class="btn btn-sm btn-success btn-outline">Details</button>
                 <button @click="openModal(data)" class="btn btn-sm btn-info btn-outline">Edit</button>
                 <button @click="handleDelete(data.id)" class="btn btn-sm btn-error btn-outline">Delete</button>
               </div>
@@ -105,6 +140,55 @@ const handleDelete = async (id: number) => {
       </table>
     </div>
 
+    <!-- Details View Modal -->
+    <dialog id="biodata_detail_modal" class="modal">
+      <div class="modal-box max-w-md">
+        <h3 class="font-bold text-xl mb-4">Biodata Details</h3>
+        
+        <div v-if="selectedItem" class="flex flex-col items-center space-y-4">
+          <!-- Image Section -->
+          <div class="avatar">
+            <div class="w-36 h-36 rounded-2xl ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden shadow-md">
+              <img 
+                :src="'data:image/png;base64,' + selectedItem.image" 
+                :alt="selectedItem.fullname" 
+                class="object-cover w-full h-full"
+              />
+            </div>
+          </div>
+
+          <!-- Details Card -->
+          <div class="w-full bg-base-200 rounded-box p-4 space-y-3">
+            <div class="flex justify-between border-b border-base-300 pb-2">
+              <span class="text-sm font-medium opacity-70">ID</span>
+              <span class="font-semibold">{{ selectedItem.id }}</span>
+            </div>
+            <div class="flex justify-between border-b border-base-300 pb-2">
+              <span class="text-sm font-medium opacity-70">Full Name</span>
+              <span class="font-semibold">{{ selectedItem.fullname }}</span>
+            </div>
+            <div class="flex justify-between border-b border-base-300 pb-2">
+              <span class="text-sm font-medium opacity-70">Mobile Phone</span>
+              <span class="font-semibold">{{ selectedItem.mobilePhone || '-' }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm font-medium opacity-70">Image Path</span>
+              <span class="font-mono text-xs break-all text-right max-w-[200px]">
+                {{ selectedItem.imagePath || 'N/A' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Create / Edit Form Modal -->
     <dialog id="biodata_modal" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">{{ isEdit ? 'Edit' : 'Create' }} Biodata</h3>
@@ -114,10 +198,26 @@ const handleDelete = async (id: number) => {
             <label class="label"><span class="label-text">Full Name</span></label>
             <input v-model="store.data.fullname" type="text" class="input input-bordered w-full" />
           </div>
+
           <div class="form-control">
             <label class="label"><span class="label-text">Mobile Phone</span></label>
             <input v-model="store.data.mobilePhone" type="text" class="input input-bordered w-full" />
           </div>
+
+          <div class="form-control">
+            <label class="label"><span class="label-text">Upload Image</span></label>
+            <input 
+              type="file" 
+              accept="image/*" 
+              class="file-input file-input-bordered w-full" 
+              @change="handleFileChange"
+            />
+          </div>
+
+          <div v-if="imagePreview" class="flex justify-center pt-2">
+            <img :src="imagePreview" alt="Preview" class="w-24 h-24 object-cover rounded-lg border" />
+          </div>
+
           <div class="form-control">
             <label class="label"><span class="label-text">Image Path</span></label>
             <input v-model="store.data.imagePath" type="text" class="input input-bordered w-full" />
@@ -136,7 +236,8 @@ const handleDelete = async (id: number) => {
       </div>
     </dialog>
   </div>
-<div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-base-100 p-4 rounded-box border border-base-300">
+
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-base-100 p-4 rounded-box border border-base-300">
     <div class="text-sm opacity-70">
       Page <b>{{ store.pagination.number + 1 }}</b> of <b>{{ store.pagination.totalPages }}</b>
     </div>
