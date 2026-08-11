@@ -3,8 +3,15 @@ build_ui:
 	cd ui && yarn build
 
 build:
+	rm -rf bin
 	mkdir -p bin
 	go build -o bin/app local.go
+
+build_prod:
+	rm -rf bin
+	mkdir -p bin
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" -o bin/app local.go
+	upx --best --lzma bin/app
 
 start: build build_ui
 	rm -rf bin/public
