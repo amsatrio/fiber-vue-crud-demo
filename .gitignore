@@ -3,3 +3,5 @@ public
 bin
 .vercel
 .env*.local
+
+**node_modules
