@@ -41,20 +41,12 @@ export const useMBiodataStore = defineStore('mbiodata', {
             if (id) formData.append('id', id.toString());
             if (this.data.fullname) formData.append('fullname', this.data.fullname);
             if (this.data.mobilePhone) formData.append('mobilePhone', this.data.mobilePhone);
+            if (this.data.image) formData.append('image', this.data.image);
             if (this.data.imagePath) formData.append('imagePath', this.data.imagePath);
-            
-            // Append file if selected
-            if (this.data.image) {
-                formData.append('image', this.data.image);
-            }
-
             try {
                 await fetch(url, {
                     method: method,
-                    // Note: Do NOT set Content-Type header manually for FormData; 
-                    // the browser automatically sets multipart/form-data with the boundary.
                     body: formData,
-                    // headers: { 'Content-type': 'application/json' },
                 });
                 await this.fetchPageData(this.pagination.number, this.pagination.size);
             } finally {

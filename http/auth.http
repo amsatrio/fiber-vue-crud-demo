@@ -1,0 +1,49 @@
+@base_url = http://localhost:9001/v1/hospital
+
+### login
+# @name login
+POST {{base_url}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "9bD2jrGU@21cn.com",
+    "password": "P@ssw0rd"
+}
+
+### refres token
+POST {{base_url}}/auth/refresh-token
+Content-Type: application/json
+
+{
+    "mainToken": "{{login.response.body.data.mainToken}}",
+    "refreshToken": "{{login.response.body.data.refreshToken}}"
+}
+
+### reset password
+POST {{base_url}}/auth/reset-password
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.data.mainToken}}
+
+{
+    "username": "9bD2jrGU@21cn.com",
+    "newPassword": "P@ssw0rd"
+}
+
+### GET admin
+GET {{base_url}}/auth/admin
+Authorization: Bearer {{login.response.body.data.mainToken}}
+
+### GET dokter
+GET {{base_url}}/auth/dokter
+Authorization: Bearer {{login.response.body.data.mainToken}}
+
+### GET pasien
+GET {{base_url}}/auth/pasien
+Authorization: Bearer {{login.response.body.data.mainToken}}
+
+### GET faskes
+GET {{base_url}}/auth/faskes
+Authorization: Bearer {{login.response.body.data.mainToken}}
+
+### GET public
+GET {{base_url}}/auth/public

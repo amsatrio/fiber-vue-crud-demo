@@ -59,7 +59,7 @@ const handleFileChange = (event: Event) => {
 // Open Detail View Modal
 const openDetailModal = (item: any) => {
   selectedItem.value = item;
-  (document.getElementById('biodata_detail_modal') as HTMLDialogElement).showModal();
+  (document.getElementById('m_biodata_detail_modal') as HTMLDialogElement).showModal();
 };
 
 // Open Create/Edit Form Modal
@@ -68,21 +68,18 @@ const openModal = (item: any = null) => {
   if (item) {
     isEdit.value = true;
     selectedId.value = item.id;
-    store.data = { ...item, image: null };
-    if (item.imagePath) {
-      imagePreview.value = item.imagePath;
-    }
+    store.data = { ...item };
   } else {
     isEdit.value = false;
     selectedId.value = null;
     store.data = { fullname: '', mobilePhone: '', image: null, imagePath: '' };
   }
-  (document.getElementById('biodata_modal') as HTMLDialogElement).showModal();
+  (document.getElementById('m_biodata_modal') as HTMLDialogElement).showModal();
 };
 
 const submitForm = async () => {
   await store.saveData(selectedId.value);
-  (document.getElementById('biodata_modal') as HTMLDialogElement).close();
+  (document.getElementById('m_biodata_modal') as HTMLDialogElement).close();
 };
 
 const handleDelete = async (id: number) => {
@@ -95,7 +92,7 @@ const handleDelete = async (id: number) => {
 <template>
   <div class="p-6">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Biodata Management</h1>
+      <h1 class="text-2xl font-bold">M Biodata Management</h1>
       <button class="btn btn-primary" @click="openModal()">Add New</button>
     </div>
 
@@ -106,14 +103,14 @@ const handleDelete = async (id: number) => {
             <th>ID</th>
             <th>Avatar</th>
             <th>Fullname</th>
-            <th>Mobile</th>
-            <th>Path</th>
+            <th>Mobile Phone</th>
+            <th>Image Path</th>
             <th class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="store.loading">
-            <td colspan="6" class="text-center py-4 text-info">Loading...</td>
+            <td colspan="10" class="text-center py-4 text-info">Loading...</td>
           </tr>
           <tr v-for="data in store.pagedata" :key="data.id" class="hover">
             <th>{{ data.id }}</th>
@@ -124,12 +121,11 @@ const handleDelete = async (id: number) => {
                 </div>
               </div>
             </td>
-            <td class="font-medium">{{ data.fullname }}</td>
-            <td>{{ data.mobilePhone }}</td>
-            <td><span class="badge badge-ghost">{{ data.imagePath || 'N/A' }}</span></td>
+            <td class="font-medium">{{ data.fullname || '-' }}</td>
+            <td class="font-medium">{{ data.mobilePhone || '-' }}</td>
+            <td class="font-medium">{{ data.imagePath || '-' }}</td>
             <td>
               <div class="flex justify-center gap-2">
-                <!-- Connected Details button to openDetailModal -->
                 <button @click="openDetailModal(data)" class="btn btn-sm btn-success btn-outline">Details</button>
                 <button @click="openModal(data)" class="btn btn-sm btn-info btn-outline">Edit</button>
                 <button @click="handleDelete(data.id)" class="btn btn-sm btn-error btn-outline">Delete</button>
@@ -141,9 +137,9 @@ const handleDelete = async (id: number) => {
     </div>
 
     <!-- Details View Modal -->
-    <dialog id="biodata_detail_modal" class="modal">
+    <dialog id="m_biodata_detail_modal" class="modal">
       <div class="modal-box max-w-md">
-        <h3 class="font-bold text-xl mb-4">Biodata Details</h3>
+        <h3 class="font-bold text-xl mb-4">M Biodata Details</h3>
         
         <div v-if="selectedItem" class="flex flex-col items-center space-y-4">
           <!-- Image Section -->
@@ -151,12 +147,11 @@ const handleDelete = async (id: number) => {
             <div class="w-36 h-36 rounded-2xl ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden shadow-md">
               <img 
                 :src="'data:image/png;base64,' + selectedItem.image" 
-                :alt="selectedItem.fullname" 
+                :alt="selectedItem.id" 
                 class="object-cover w-full h-full"
               />
             </div>
           </div>
-
           <!-- Details Card -->
           <div class="w-full bg-base-200 rounded-box p-4 space-y-3">
             <div class="flex justify-between border-b border-base-300 pb-2">
@@ -164,18 +159,16 @@ const handleDelete = async (id: number) => {
               <span class="font-semibold">{{ selectedItem.id }}</span>
             </div>
             <div class="flex justify-between border-b border-base-300 pb-2">
-              <span class="text-sm font-medium opacity-70">Full Name</span>
-              <span class="font-semibold">{{ selectedItem.fullname }}</span>
+              <span class="text-sm font-medium opacity-70">Fullname</span>
+              <span class="font-semibold">{{ selectedItem.fullname ?? '-' }}</span>
             </div>
             <div class="flex justify-between border-b border-base-300 pb-2">
               <span class="text-sm font-medium opacity-70">Mobile Phone</span>
-              <span class="font-semibold">{{ selectedItem.mobilePhone || '-' }}</span>
+              <span class="font-semibold">{{ selectedItem.mobilePhone ?? '-' }}</span>
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-between border-b border-base-300 pb-2">
               <span class="text-sm font-medium opacity-70">Image Path</span>
-              <span class="font-mono text-xs break-all text-right max-w-[200px]">
-                {{ selectedItem.imagePath || 'N/A' }}
-              </span>
+              <span class="font-semibold">{{ selectedItem.imagePath ?? '-' }}</span>
             </div>
           </div>
         </div>
@@ -189,13 +182,13 @@ const handleDelete = async (id: number) => {
     </dialog>
 
     <!-- Create / Edit Form Modal -->
-    <dialog id="biodata_modal" class="modal">
+    <dialog id="m_biodata_modal" class="modal">
       <div class="modal-box">
-        <h3 class="font-bold text-lg">{{ isEdit ? 'Edit' : 'Create' }} Biodata</h3>
+        <h3 class="font-bold text-lg">{ isEdit ? 'Edit' : 'Create' } M Biodata</h3>
         
         <div class="py-4 space-y-4">
           <div class="form-control">
-            <label class="label"><span class="label-text">Full Name</span></label>
+            <label class="label"><span class="label-text">Fullname</span></label>
             <input v-model="store.data.fullname" type="text" class="input input-bordered w-full" />
           </div>
 

@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -17,7 +18,15 @@ var DB_FILE_MANAGEMENT *gorm.DB
 func InitializeDatabase() {
 	var err error
 
-	file, err := os.Create("logs/gorm.log")
+	filePath := "logs/gorm-db-hospital.log"
+
+	// 1. Ensure directory exists
+	if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
+		panic(err)
+	}
+
+	// 2. Create the file
+	file, err := os.Create(filePath)
 	if err != nil {
 		panic(err)
 	}
@@ -60,12 +69,22 @@ func InitializeDatabase() {
 	sqlDB.SetMaxIdleConns(5)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Minute)
+
+	defer file.Close()
 }
 
 func InitializeDatabaseFileManagement() {
 	var err error
 
-	file, err := os.Create("logs/gorm.log")
+	filePath := "logs/gorm-db-file-management.log"
+
+	// 1. Ensure directory exists
+	if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
+		panic(err)
+	}
+
+	// 2. Create the file
+	file, err := os.Create(filePath)
 	if err != nil {
 		panic(err)
 	}
@@ -108,4 +127,6 @@ func InitializeDatabaseFileManagement() {
 	sqlDB.SetMaxIdleConns(5)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Minute)
+
+	defer file.Close()
 }

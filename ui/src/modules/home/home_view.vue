@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
     <div class="card button-list w-96">
       <router-link to="/" class="btn btn-primary"> home </router-link>
       <router-link to="/counter" class="btn btn-primary">counter</router-link>
-      <router-link to="/hospital/m-biodata" class="btn btn-primary">hospital m-biodata</router-link>
+      <router-link to="/hospital" class="btn btn-primary">hospital</router-link>
     </div>
   </main>
 </template>
