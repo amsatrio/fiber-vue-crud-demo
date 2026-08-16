@@ -181,7 +181,7 @@ const handleDelete = async (id: number) => {
     <!-- Create / Edit Form Modal -->
     <dialog id="m_user_modal" class="modal">
       <div class="modal-box">
-        <h3 class="font-bold text-lg">{ isEdit ? 'Edit' : 'Create' } M User</h3>
+        <h3 class="font-bold text-lg">{{ isEdit ? 'Edit' : 'Create' }} M User</h3>
         
         <div class="py-4 space-y-4">
           <div class="form-control">

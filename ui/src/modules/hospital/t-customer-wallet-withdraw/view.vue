@@ -181,7 +181,7 @@ const handleDelete = async (id: number) => {
     <!-- Create / Edit Form Modal -->
     <dialog id="t_customer_wallet_withdraw_modal" class="modal">
       <div class="modal-box">
-        <h3 class="font-bold text-lg">{ isEdit ? 'Edit' : 'Create' } T Customer Wallet Withdraw</h3>
+        <h3 class="font-bold text-lg">{{ isEdit ? 'Edit' : 'Create' }} T Customer Wallet Withdraw</h3>
         
         <div class="py-4 space-y-4">
           <div class="form-control">
