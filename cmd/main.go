@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
-	"net/http"
 	"os"
 	"strings"
 
@@ -16,11 +15,10 @@ import (
 	"github.com/gofiber/contrib/v3/swaggo"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/static"
-	"github.com/gofiber/template/html/v3"
 )
 
 func Config() fiber.Config {
-	engine := html.NewFileSystem(http.Dir("./html"), ".html")
+	// engine := html.NewFileSystem(http.Dir("./html"), ".html")
 	return fiber.Config{
 		CaseSensitive: true,
 		StrictRouting: true,
@@ -43,7 +41,7 @@ func Config() fiber.Config {
 
 			return c.Status(code).JSON(res)
 		},
-		Views: engine,
+		// Views: engine,
 	}
 }
 
@@ -59,39 +57,6 @@ func Routes(app *fiber.App) {
 		return ctx.JSON(fiber.Map{
 			"SERVER_PORT": os.Getenv("SERVER_PORT"),
 		})
-	})
-
-	app.Get("/html", func(c fiber.Ctx) error {
-		// Render index - start with views directory
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		})
-	})
-	app.Get("/html/layout", func(c fiber.Ctx) error {
-		// Render index within layouts/main
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		}, "layouts/main")
-	})
-	app.Get("/html/modules/coffee", func(c fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		}, "modules/coffee/index")
-	})
-	app.Get("/html/modules/portfolio", func(c fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		}, "modules/portfolio/index")
-	})
-	app.Get("/html/modules/company_portfolio", func(c fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		}, "modules/company_portfolio/index")
-	})
-	app.Get("/html/modules/wedding", func(c fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "Hello, World!",
-		}, "modules/wedding/index")
 	})
 
 	// Static assets
