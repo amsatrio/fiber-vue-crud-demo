@@ -236,13 +236,6 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentPage(c fiber.Ctx) 
         return c.Status(res.Status).JSON(res)
     }
 
-	for i := range sortRequest {
-		sortRequest[i].Id = util.CamelCaseToSnakeCase(sortRequest[i].Id)
-	}
-	for i := range filterRequest {
-		filterRequest[i].Id = util.CamelCaseToSnakeCase(filterRequest[i].Id)
-	}
-
     isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString
     if !isLetterNumber(searchRequest) && searchRequest != "" {
         res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: global search must not contains special character")
@@ -263,6 +256,13 @@ func (h *TDoctorOfficeTreatmentHandler) TDoctorOfficeTreatmentPage(c fiber.Ctx) 
         res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+jsonUnmarshalErr.Error())
         return c.Status(res.Status).JSON(res)
     }
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
+	}
 
     result, err := h.service.GetPage(sorts, filters, searchRequest, pageInt, sizeInt64, sizeInt)
 
