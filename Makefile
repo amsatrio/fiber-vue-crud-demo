@@ -16,8 +16,6 @@ build_prod:
 start: build build_ui
 	rm -rf bin/public
 	mv ui/dist bin/public
-	rm -rf bin/html
-	cp -ar html bin
 	cp .env bin
 	cd bin && ./app
 
