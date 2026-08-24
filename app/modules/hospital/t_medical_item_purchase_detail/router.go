@@ -1,5 +1,4 @@
 package t_medical_item_purchase_detail
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTMedicalItemPurchaseDetailRepository(initializer.DB)
 	service := NewTMedicalItemPurchaseDetailService(repo)
 	handler := NewTMedicalItemPurchaseDetailHandler(service, validate)
-
+	
 	api.Post("/t-medical-item-purchase-detail", handler.TMedicalItemPurchaseDetailCreate)
 	api.Put("/t-medical-item-purchase-detail", handler.TMedicalItemPurchaseDetailUpdate)
 	api.Get("/t-medical-item-purchase-detail/:id", handler.TMedicalItemPurchaseDetailIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-medical-item-purchase-detail/:size", handler.GenerateTMedicalItemPurchaseDetail)
 }
+

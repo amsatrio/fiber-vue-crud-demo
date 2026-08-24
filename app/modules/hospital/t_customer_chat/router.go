@@ -1,5 +1,4 @@
 package t_customer_chat
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerChatRepository(initializer.DB)
 	service := NewTCustomerChatService(repo)
 	handler := NewTCustomerChatHandler(service, validate)
-
+	
 	api.Post("/t-customer-chat", handler.TCustomerChatCreate)
 	api.Put("/t-customer-chat", handler.TCustomerChatUpdate)
 	api.Get("/t-customer-chat/:id", handler.TCustomerChatIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-customer-chat/:size", handler.GenerateTCustomerChat)
 }
+

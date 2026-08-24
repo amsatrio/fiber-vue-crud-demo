@@ -1,5 +1,4 @@
 package m_specialization
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMSpecializationRepository(initializer.DB)
 	service := NewMSpecializationService(repo)
 	handler := NewMSpecializationHandler(service, validate)
-
+	
 	api.Post("/m-specialization", handler.MSpecializationCreate)
 	api.Put("/m-specialization", handler.MSpecializationUpdate)
 	api.Get("/m-specialization/:id", handler.MSpecializationIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-specialization/:size", handler.GenerateMSpecialization)
 }
+

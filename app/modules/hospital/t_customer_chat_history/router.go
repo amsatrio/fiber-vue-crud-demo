@@ -1,5 +1,4 @@
 package t_customer_chat_history
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCustomerChatHistoryRepository(initializer.DB)
 	service := NewTCustomerChatHistoryService(repo)
 	handler := NewTCustomerChatHistoryHandler(service, validate)
-
+	
 	api.Post("/t-customer-chat-history", handler.TCustomerChatHistoryCreate)
 	api.Put("/t-customer-chat-history", handler.TCustomerChatHistoryUpdate)
 	api.Get("/t-customer-chat-history/:id", handler.TCustomerChatHistoryIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-customer-chat-history/:size", handler.GenerateTCustomerChatHistory)
 }
+

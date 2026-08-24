@@ -1,5 +1,4 @@
 package m_biodata
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMBiodataRepository(initializer.DB)
 	service := NewMBiodataService(repo)
 	handler := NewMBiodataHandler(service, validate)
-
+	
 	api.Post("/m-biodata", handler.MBiodataCreate)
 	api.Put("/m-biodata", handler.MBiodataUpdate)
 	api.Get("/m-biodata/:id", handler.MBiodataIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-biodata/:size", handler.GenerateMBiodata)
 }
+

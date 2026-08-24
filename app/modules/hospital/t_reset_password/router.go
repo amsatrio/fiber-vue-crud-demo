@@ -1,5 +1,4 @@
 package t_reset_password
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTResetPasswordRepository(initializer.DB)
 	service := NewTResetPasswordService(repo)
 	handler := NewTResetPasswordHandler(service, validate)
-
+	
 	api.Post("/t-reset-password", handler.TResetPasswordCreate)
 	api.Put("/t-reset-password", handler.TResetPasswordUpdate)
 	api.Get("/t-reset-password/:id", handler.TResetPasswordIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-reset-password/:size", handler.GenerateTResetPassword)
 }
+

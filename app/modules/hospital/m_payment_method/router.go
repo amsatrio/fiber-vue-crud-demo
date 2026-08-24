@@ -1,5 +1,4 @@
 package m_payment_method
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMPaymentMethodRepository(initializer.DB)
 	service := NewMPaymentMethodService(repo)
 	handler := NewMPaymentMethodHandler(service, validate)
-
+	
 	api.Post("/m-payment-method", handler.MPaymentMethodCreate)
 	api.Put("/m-payment-method", handler.MPaymentMethodUpdate)
 	api.Get("/m-payment-method/:id", handler.MPaymentMethodIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-payment-method/:size", handler.GenerateMPaymentMethod)
 }
+

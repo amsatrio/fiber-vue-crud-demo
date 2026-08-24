@@ -1,5 +1,4 @@
 package m_wallet_default_nominal
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMWalletDefaultNominalRepository(initializer.DB)
 	service := NewMWalletDefaultNominalService(repo)
 	handler := NewMWalletDefaultNominalHandler(service, validate)
-
+	
 	api.Post("/m-wallet-default-nominal", handler.MWalletDefaultNominalCreate)
 	api.Put("/m-wallet-default-nominal", handler.MWalletDefaultNominalUpdate)
 	api.Get("/m-wallet-default-nominal/:id", handler.MWalletDefaultNominalIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-wallet-default-nominal/:size", handler.GenerateMWalletDefaultNominal)
 }
+

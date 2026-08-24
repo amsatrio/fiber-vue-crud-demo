@@ -1,5 +1,4 @@
 package t_treatment_discount
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTTreatmentDiscountRepository(initializer.DB)
 	service := NewTTreatmentDiscountService(repo)
 	handler := NewTTreatmentDiscountHandler(service, validate)
-
+	
 	api.Post("/t-treatment-discount", handler.TTreatmentDiscountCreate)
 	api.Put("/t-treatment-discount", handler.TTreatmentDiscountUpdate)
 	api.Get("/t-treatment-discount/:id", handler.TTreatmentDiscountIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-treatment-discount/:size", handler.GenerateTTreatmentDiscount)
 }
+

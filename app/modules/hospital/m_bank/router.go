@@ -1,5 +1,4 @@
 package m_bank
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMBankRepository(initializer.DB)
 	service := NewMBankService(repo)
 	handler := NewMBankHandler(service, validate)
-
+	
 	api.Post("/m-bank", handler.MBankCreate)
 	api.Put("/m-bank", handler.MBankUpdate)
 	api.Get("/m-bank/:id", handler.MBankIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-bank/:size", handler.GenerateMBank)
 }
+

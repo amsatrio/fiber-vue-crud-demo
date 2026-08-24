@@ -1,5 +1,4 @@
 package t_doctor_office_treatment
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTDoctorOfficeTreatmentRepository(initializer.DB)
 	service := NewTDoctorOfficeTreatmentService(repo)
 	handler := NewTDoctorOfficeTreatmentHandler(service, validate)
-
+	
 	api.Post("/t-doctor-office-treatment", handler.TDoctorOfficeTreatmentCreate)
 	api.Put("/t-doctor-office-treatment", handler.TDoctorOfficeTreatmentUpdate)
 	api.Get("/t-doctor-office-treatment/:id", handler.TDoctorOfficeTreatmentIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-doctor-office-treatment/:size", handler.GenerateTDoctorOfficeTreatment)
 }
+

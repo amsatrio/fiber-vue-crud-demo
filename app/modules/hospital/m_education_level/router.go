@@ -1,5 +1,4 @@
 package m_education_level
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMEducationLevelRepository(initializer.DB)
 	service := NewMEducationLevelService(repo)
 	handler := NewMEducationLevelHandler(service, validate)
-
+	
 	api.Post("/m-education-level", handler.MEducationLevelCreate)
 	api.Put("/m-education-level", handler.MEducationLevelUpdate)
 	api.Get("/m-education-level/:id", handler.MEducationLevelIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-education-level/:size", handler.GenerateMEducationLevel)
 }
+

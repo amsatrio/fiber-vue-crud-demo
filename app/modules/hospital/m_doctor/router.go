@@ -1,5 +1,4 @@
 package m_doctor
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMDoctorRepository(initializer.DB)
 	service := NewMDoctorService(repo)
 	handler := NewMDoctorHandler(service, validate)
-
+	
 	api.Post("/m-doctor", handler.MDoctorCreate)
 	api.Put("/m-doctor", handler.MDoctorUpdate)
 	api.Get("/m-doctor/:id", handler.MDoctorIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-doctor/:size", handler.GenerateMDoctor)
 }
+

@@ -1,5 +1,4 @@
 package m_medical_facility_schedule
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMMedicalFacilityScheduleRepository(initializer.DB)
 	service := NewMMedicalFacilityScheduleService(repo)
 	handler := NewMMedicalFacilityScheduleHandler(service, validate)
-
+	
 	api.Post("/m-medical-facility-schedule", handler.MMedicalFacilityScheduleCreate)
 	api.Put("/m-medical-facility-schedule", handler.MMedicalFacilityScheduleUpdate)
 	api.Get("/m-medical-facility-schedule/:id", handler.MMedicalFacilityScheduleIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-medical-facility-schedule/:size", handler.GenerateMMedicalFacilitySchedule)
 }
+

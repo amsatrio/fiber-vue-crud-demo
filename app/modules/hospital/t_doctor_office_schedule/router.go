@@ -1,5 +1,4 @@
 package t_doctor_office_schedule
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTDoctorOfficeScheduleRepository(initializer.DB)
 	service := NewTDoctorOfficeScheduleService(repo)
 	handler := NewTDoctorOfficeScheduleHandler(service, validate)
-
+	
 	api.Post("/t-doctor-office-schedule", handler.TDoctorOfficeScheduleCreate)
 	api.Put("/t-doctor-office-schedule", handler.TDoctorOfficeScheduleUpdate)
 	api.Get("/t-doctor-office-schedule/:id", handler.TDoctorOfficeScheduleIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-doctor-office-schedule/:size", handler.GenerateTDoctorOfficeSchedule)
 }
+

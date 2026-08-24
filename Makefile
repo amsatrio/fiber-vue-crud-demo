@@ -5,12 +5,12 @@ build_ui:
 build:
 	rm -rf bin
 	mkdir -p bin
-	go build -o bin/app local.go
+	go build -o bin/app main.go
 
 build_prod:
 	rm -rf bin
 	mkdir -p bin
-	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" -o bin/app local.go
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" -o bin/app main.go
 	upx --best --lzma bin/app
 
 start: build build_ui

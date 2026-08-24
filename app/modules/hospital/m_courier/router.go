@@ -1,5 +1,4 @@
 package m_courier
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMCourierRepository(initializer.DB)
 	service := NewMCourierService(repo)
 	handler := NewMCourierHandler(service, validate)
-
+	
 	api.Post("/m-courier", handler.MCourierCreate)
 	api.Put("/m-courier", handler.MCourierUpdate)
 	api.Get("/m-courier/:id", handler.MCourierIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-courier/:size", handler.GenerateMCourier)
 }
+

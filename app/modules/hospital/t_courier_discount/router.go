@@ -1,5 +1,4 @@
 package t_courier_discount
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewTCourierDiscountRepository(initializer.DB)
 	service := NewTCourierDiscountService(repo)
 	handler := NewTCourierDiscountHandler(service, validate)
-
+	
 	api.Post("/t-courier-discount", handler.TCourierDiscountCreate)
 	api.Put("/t-courier-discount", handler.TCourierDiscountUpdate)
 	api.Get("/t-courier-discount/:id", handler.TCourierDiscountIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-courier-discount/:size", handler.GenerateTCourierDiscount)
 }
+

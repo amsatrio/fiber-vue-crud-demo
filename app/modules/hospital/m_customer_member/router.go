@@ -1,5 +1,4 @@
 package m_customer_member
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMCustomerMemberRepository(initializer.DB)
 	service := NewMCustomerMemberService(repo)
 	handler := NewMCustomerMemberHandler(service, validate)
-
+	
 	api.Post("/m-customer-member", handler.MCustomerMemberCreate)
 	api.Put("/m-customer-member", handler.MCustomerMemberUpdate)
 	api.Get("/m-customer-member/:id", handler.MCustomerMemberIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-customer-member/:size", handler.GenerateMCustomerMember)
 }
+

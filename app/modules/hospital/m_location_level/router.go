@@ -1,5 +1,4 @@
 package m_location_level
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMLocationLevelRepository(initializer.DB)
 	service := NewMLocationLevelService(repo)
 	handler := NewMLocationLevelHandler(service, validate)
-
+	
 	api.Post("/m-location-level", handler.MLocationLevelCreate)
 	api.Put("/m-location-level", handler.MLocationLevelUpdate)
 	api.Get("/m-location-level/:id", handler.MLocationLevelIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-location-level/:size", handler.GenerateMLocationLevel)
 }
+

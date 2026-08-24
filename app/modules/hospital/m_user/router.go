@@ -1,5 +1,4 @@
 package m_user
-
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -11,7 +10,7 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	repo := NewMUserRepository(initializer.DB)
 	service := NewMUserService(repo)
 	handler := NewMUserHandler(service, validate)
-
+	
 	api.Post("/m-user", handler.MUserCreate)
 	api.Put("/m-user", handler.MUserUpdate)
 	api.Get("/m-user/:id", handler.MUserIndex)
@@ -20,3 +19,4 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-user/:size", handler.GenerateMUser)
 }
+
