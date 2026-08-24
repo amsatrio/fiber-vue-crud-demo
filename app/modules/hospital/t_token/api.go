@@ -40,7 +40,7 @@ func NewTTokenHandler(service TTokenService, validate *validator.Validate) *TTok
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-token [post]
+//	@Router         /v1/hospital/t-token [post]
 func (h *TTokenHandler) TTokenCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TTokenHandler) TTokenCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-token [put]
+//	@Router         /v1/hospital/t-token [put]
 func (h *TTokenHandler) TTokenUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TTokenHandler) TTokenUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-token/{id} [get]
+//	@Router         /v1/hospital/t-token/{id} [get]
 func (h *TTokenHandler) TTokenIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TTokenHandler) TTokenIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-token/{id} [delete]
+//	@Router         /v1/hospital/t-token/{id} [delete]
 func (h *TTokenHandler) TTokenDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TTokenHandler) TTokenDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-token [get]
+//	@Router         /v1/hospital/t-token [get]
 func (h *TTokenHandler) TTokenPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *TTokenHandler) TTokenPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

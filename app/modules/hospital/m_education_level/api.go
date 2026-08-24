@@ -40,7 +40,7 @@ func NewMEducationLevelHandler(service MEducationLevelService, validate *validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-education-level [post]
+//	@Router         /v1/hospital/m-education-level [post]
 func (h *MEducationLevelHandler) MEducationLevelCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MEducationLevelHandler) MEducationLevelCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-education-level [put]
+//	@Router         /v1/hospital/m-education-level [put]
 func (h *MEducationLevelHandler) MEducationLevelUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MEducationLevelHandler) MEducationLevelUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-education-level/{id} [get]
+//	@Router         /v1/hospital/m-education-level/{id} [get]
 func (h *MEducationLevelHandler) MEducationLevelIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MEducationLevelHandler) MEducationLevelIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-education-level/{id} [delete]
+//	@Router         /v1/hospital/m-education-level/{id} [delete]
 func (h *MEducationLevelHandler) MEducationLevelDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MEducationLevelHandler) MEducationLevelDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-education-level [get]
+//	@Router         /v1/hospital/m-education-level [get]
 func (h *MEducationLevelHandler) MEducationLevelPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *MEducationLevelHandler) MEducationLevelPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

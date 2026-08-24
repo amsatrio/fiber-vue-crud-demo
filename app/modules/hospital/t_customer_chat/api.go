@@ -40,7 +40,7 @@ func NewTCustomerChatHandler(service TCustomerChatService, validate *validator.V
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat [post]
+//	@Router         /v1/hospital/t-customer-chat [post]
 func (h *TCustomerChatHandler) TCustomerChatCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerChatHandler) TCustomerChatCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat [put]
+//	@Router         /v1/hospital/t-customer-chat [put]
 func (h *TCustomerChatHandler) TCustomerChatUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerChatHandler) TCustomerChatUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat/{id} [get]
+//	@Router         /v1/hospital/t-customer-chat/{id} [get]
 func (h *TCustomerChatHandler) TCustomerChatIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerChatHandler) TCustomerChatIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat/{id} [delete]
+//	@Router         /v1/hospital/t-customer-chat/{id} [delete]
 func (h *TCustomerChatHandler) TCustomerChatDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerChatHandler) TCustomerChatDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-chat [get]
+//	@Router         /v1/hospital/t-customer-chat [get]
 func (h *TCustomerChatHandler) TCustomerChatPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *TCustomerChatHandler) TCustomerChatPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

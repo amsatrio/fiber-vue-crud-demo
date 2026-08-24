@@ -40,7 +40,7 @@ func NewMUserHandler(service MUserService, validate *validator.Validate) *MUserH
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-user [post]
+//	@Router         /v1/hospital/m-user [post]
 func (h *MUserHandler) MUserCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MUserHandler) MUserCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-user [put]
+//	@Router         /v1/hospital/m-user [put]
 func (h *MUserHandler) MUserUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MUserHandler) MUserUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-user/{id} [get]
+//	@Router         /v1/hospital/m-user/{id} [get]
 func (h *MUserHandler) MUserIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MUserHandler) MUserIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-user/{id} [delete]
+//	@Router         /v1/hospital/m-user/{id} [delete]
 func (h *MUserHandler) MUserDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MUserHandler) MUserDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-user [get]
+//	@Router         /v1/hospital/m-user [get]
 func (h *MUserHandler) MUserPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *MUserHandler) MUserPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

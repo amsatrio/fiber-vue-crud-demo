@@ -40,7 +40,7 @@ func NewTMedicalItemPurchaseHandler(service TMedicalItemPurchaseService, validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase [post]
+//	@Router         /v1/hospital/t-medical-item-purchase [post]
 func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseCreate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase [put]
+//	@Router         /v1/hospital/t-medical-item-purchase [put]
 func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseUpdate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase/{id} [get]
+//	@Router         /v1/hospital/t-medical-item-purchase/{id} [get]
 func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseIndex(c fiber.Ctx) err
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase/{id} [delete]
+//	@Router         /v1/hospital/t-medical-item-purchase/{id} [delete]
 func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchaseDelete(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-medical-item-purchase [get]
+//	@Router         /v1/hospital/t-medical-item-purchase [get]
 func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchasePage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *TMedicalItemPurchaseHandler) TMedicalItemPurchasePage(c fiber.Ctx) erro
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

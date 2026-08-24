@@ -40,7 +40,7 @@ func NewMMedicalItemCategoryHandler(service MMedicalItemCategoryService, validat
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item-category [post]
+//	@Router         /v1/hospital/m-medical-item-category [post]
 func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryCreate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item-category [put]
+//	@Router         /v1/hospital/m-medical-item-category [put]
 func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryUpdate(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item-category/{id} [get]
+//	@Router         /v1/hospital/m-medical-item-category/{id} [get]
 func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryIndex(c fiber.Ctx) err
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item-category/{id} [delete]
+//	@Router         /v1/hospital/m-medical-item-category/{id} [delete]
 func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryDelete(c fiber.Ctx) er
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-medical-item-category [get]
+//	@Router         /v1/hospital/m-medical-item-category [get]
 func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *MMedicalItemCategoryHandler) MMedicalItemCategoryPage(c fiber.Ctx) erro
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

@@ -40,7 +40,7 @@ func NewTCustomerVaHistoryHandler(service TCustomerVaHistoryService, validate *v
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va-history [post]
+//	@Router         /v1/hospital/t-customer-va-history [post]
 func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryCreate(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va-history [put]
+//	@Router         /v1/hospital/t-customer-va-history [put]
 func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryUpdate(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va-history/{id} [get]
+//	@Router         /v1/hospital/t-customer-va-history/{id} [get]
 func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va-history/{id} [delete]
+//	@Router         /v1/hospital/t-customer-va-history/{id} [delete]
 func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryDelete(c fiber.Ctx) error 
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-customer-va-history [get]
+//	@Router         /v1/hospital/t-customer-va-history [get]
 func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *TCustomerVaHistoryHandler) TCustomerVaHistoryPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

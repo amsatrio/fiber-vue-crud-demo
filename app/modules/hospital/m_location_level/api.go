@@ -40,7 +40,7 @@ func NewMLocationLevelHandler(service MLocationLevelService, validate *validator
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location-level [post]
+//	@Router         /v1/hospital/m-location-level [post]
 func (h *MLocationLevelHandler) MLocationLevelCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *MLocationLevelHandler) MLocationLevelCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location-level [put]
+//	@Router         /v1/hospital/m-location-level [put]
 func (h *MLocationLevelHandler) MLocationLevelUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *MLocationLevelHandler) MLocationLevelUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location-level/{id} [get]
+//	@Router         /v1/hospital/m-location-level/{id} [get]
 func (h *MLocationLevelHandler) MLocationLevelIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *MLocationLevelHandler) MLocationLevelIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location-level/{id} [delete]
+//	@Router         /v1/hospital/m-location-level/{id} [delete]
 func (h *MLocationLevelHandler) MLocationLevelDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *MLocationLevelHandler) MLocationLevelDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/m-location-level [get]
+//	@Router         /v1/hospital/m-location-level [get]
 func (h *MLocationLevelHandler) MLocationLevelPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *MLocationLevelHandler) MLocationLevelPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString

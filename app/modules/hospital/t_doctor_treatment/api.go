@@ -40,7 +40,7 @@ func NewTDoctorTreatmentHandler(service TDoctorTreatmentService, validate *valid
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-treatment [post]
+//	@Router         /v1/hospital/t-doctor-treatment [post]
 func (h *TDoctorTreatmentHandler) TDoctorTreatmentCreate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -83,7 +83,7 @@ func (h *TDoctorTreatmentHandler) TDoctorTreatmentCreate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-treatment [put]
+//	@Router         /v1/hospital/t-doctor-treatment [put]
 func (h *TDoctorTreatmentHandler) TDoctorTreatmentUpdate(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -126,7 +126,7 @@ func (h *TDoctorTreatmentHandler) TDoctorTreatmentUpdate(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-treatment/{id} [get]
+//	@Router         /v1/hospital/t-doctor-treatment/{id} [get]
 func (h *TDoctorTreatmentHandler) TDoctorTreatmentIndex(c fiber.Ctx) error {
 
 	res := &response.Response{}
@@ -169,7 +169,7 @@ func (h *TDoctorTreatmentHandler) TDoctorTreatmentIndex(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-treatment/{id} [delete]
+//	@Router         /v1/hospital/t-doctor-treatment/{id} [delete]
 func (h *TDoctorTreatmentHandler) TDoctorTreatmentDelete(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -209,7 +209,7 @@ func (h *TDoctorTreatmentHandler) TDoctorTreatmentDelete(c fiber.Ctx) error {
 //	@Failure        400 {object}    response.Response
 //	@Failure        404 {object}    response.Response
 //	@Failure        500 {object}    response.Response
-//	@Router         /v1/t-doctor-treatment [get]
+//	@Router         /v1/hospital/t-doctor-treatment [get]
 func (h *TDoctorTreatmentHandler) TDoctorTreatmentPage(c fiber.Ctx) error {
 	res := &response.Response{}
 
@@ -234,6 +234,13 @@ func (h *TDoctorTreatmentHandler) TDoctorTreatmentPage(c fiber.Ctx) error {
 	if errorLimitInt != nil {
 		res.ErrMessage(c.Path(), fiber.StatusBadRequest, "parse data error: "+errorLimitInt.Error())
 		return c.Status(res.Status).JSON(res)
+	}
+
+	for i := range sorts {
+		sorts[i].Id = util.CamelCaseToSnakeCase(sorts[i].Id)
+	}
+	for i := range filters {
+		filters[i].Id = util.CamelCaseToSnakeCase(filters[i].Id)
 	}
 
 	isLetterNumber := regexp.MustCompile(`^[a-zA-Z0-9\s]+$`).MatchString
