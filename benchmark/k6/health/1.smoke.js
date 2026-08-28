@@ -11,12 +11,12 @@ export const options = {
     },
     scenarios: {
         // define scenarios
-        breaking: {
+        smoke: {
             executor: 'ramping-vus',
             stages: [
                 // Key for Smoke test. Keep it at 2, 3, max 5 VUs
                 // This can be shorter or just a few iterations
-                { duration: '60s', target: 2 },
+                { duration: '1m', target: 2 },
 
             ],
         },
@@ -24,19 +24,14 @@ export const options = {
 };
 
 export default function () {
-    // define URL and request body
+    // define URL
     const url = 'http://localhost:9001/v1/health/status';
-    const params = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
 
-    // send a post request and save response as a variable
-    const res = http.get(url, params);
+    // send a get request and save response as a variable
+    const res = http.get(url);
 
     // check that response is 200
     check(res, {
-        'response code was 200': (res) => res.status == 200,
+        'response code was 200': (r) => r.status === 200,
     });
 }

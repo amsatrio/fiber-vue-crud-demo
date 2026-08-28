@@ -4,15 +4,12 @@ import http from 'k6/http';
 
 // define configuration
 export const options = {
-    // define thresholds
-    thresholds: {
-        http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-        http_req_duration: ['p(99)<1000'], // 99% of requests should be below 1s
-    },
+    // breakpoint tests intentionally push the system past its limits,
+    // so no pass/fail thresholds are set — we just observe where it breaks.
     scenarios: {
         // define scenarios
-        breaking: {
-            executor: 'ramping-vus',
+        breakpoint: {
+            executor: 'ramping-arrival-rate', // Assure load increase if the system slows
             stages: [
                 { duration: '2h', target: 20000 }, // just slowly ramp-up to a HUGE load
 
@@ -22,19 +19,14 @@ export const options = {
 };
 
 export default function () {
-    // define URL and request body
+    // define URL
     const url = 'http://localhost:9001/v1/health/status';
-    const params = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
 
-    // send a post request and save response as a variable
-    const res = http.get(url, params);
+    // send a get request and save response as a variable
+    const res = http.get(url);
 
     // check that response is 200
     check(res, {
-        'response code was 200': (res) => res.status == 200,
+        'response code was 200': (r) => r.status === 200,
     });
 }
