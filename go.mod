@@ -1,6 +1,6 @@
 module github.com/amsatrio/fiber-vue-crud-demo
 
-go 1.25.8
+go 1.26.0
 
 require (
 	github.com/swaggo/swag v1.16.6
