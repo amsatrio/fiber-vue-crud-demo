@@ -19,9 +19,9 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 	api.Post("/auth/refresh-token", handler.AuthRefreshToken)
 	api.Post("/auth/reset-password", middleware.AuthenticationMiddleware(), handler.AuthResetPassword)
 
-	api.Get("/auth/dokter", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(1, 2), handler.AuthDokter)
-	api.Get("/auth/faskes", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(1, 4), handler.AuthFaskes)
-	api.Get("/auth/admin", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(1), handler.AuthAdmin)
+	api.Get("/auth/dokter", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(), handler.AuthDokter)
+	api.Get("/auth/faskes", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(), handler.AuthFaskes)
+	api.Get("/auth/admin", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(), handler.AuthAdmin)
 	api.Get("/auth/public", handler.AuthPublic)
-	api.Get("/auth/pasien", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(1, 3), handler.AuthPasien)
+	api.Get("/auth/pasien", middleware.AuthenticationMiddleware(), middleware.AuthorizationMiddleware(), handler.AuthPasien)
 }
