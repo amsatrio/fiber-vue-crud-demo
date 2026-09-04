@@ -1,4 +1,5 @@
 package m_biodata_attachment
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMBiodataAttachmentRepository(initializer.DB)
+	repo := NewMBiodataAttachmentRepository(initializer.DB_HOSPITAL)
 	service := NewMBiodataAttachmentService(repo)
 	handler := NewMBiodataAttachmentHandler(service, validate)
-	
+
 	api.Post("/m-biodata-attachment", handler.MBiodataAttachmentCreate)
 	api.Put("/m-biodata-attachment", handler.MBiodataAttachmentUpdate)
 	api.Get("/m-biodata-attachment/:id", handler.MBiodataAttachmentIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-biodata-attachment/:size", handler.GenerateMBiodataAttachment)
 }
-

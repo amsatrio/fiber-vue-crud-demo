@@ -1,4 +1,5 @@
-@base_url=http://127.0.0.1:9001
+@base_url=https://fiber-vue-crud-demo.vercel.app
+# @base_url=http://127.0.0.1:9001
 
 ### health status
 GET {{base_url}}/v1/health/status

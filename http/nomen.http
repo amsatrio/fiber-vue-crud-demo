@@ -1,0 +1,17 @@
+@base_url=http://localhost:9001
+# @base_url=http://localhost:3000
+
+###
+GET {{base_url}}/v1/nomen?page=0&size=5
+
+###
+GET {{base_url}}/v1/nomen?page=0&size=5&search=Hund
+
+###
+GET {{base_url}}/v1/nomen?page=0&size=5&sort=[{"id":"singular","desc":false}]
+
+###
+GET {{base_url}}/v1/nomen?page=0&size=5&filter=[{"id":"gender","value":"masculine","matchMode":"EQUALS","dataType":"TEXT","mode":"AND"}]
+
+###
+GET {{base_url}}/v1/nomen?page=0&size=5&sort=[{"id":"createdAt","desc":true}]&filter=[{"id":"level","value":"A1","matchMode":"EQUALS","dataType":"TEXT","mode":"AND"}]

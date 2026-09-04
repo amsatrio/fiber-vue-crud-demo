@@ -1,4 +1,5 @@
 package m_location
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMLocationRepository(initializer.DB)
+	repo := NewMLocationRepository(initializer.DB_HOSPITAL)
 	service := NewMLocationService(repo)
 	handler := NewMLocationHandler(service, validate)
-	
+
 	api.Post("/m-location", handler.MLocationCreate)
 	api.Put("/m-location", handler.MLocationUpdate)
 	api.Get("/m-location/:id", handler.MLocationIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-location/:size", handler.GenerateMLocation)
 }
-

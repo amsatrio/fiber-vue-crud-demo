@@ -79,13 +79,13 @@ func AuthorizationMiddleware() fiber.Handler {
 		urlPath := c.OriginalURL()
 
 		var menu m_menu.MMenu
-		result := initializer.DB.Where("url = ? AND is_delete = 0", urlPath).First(&menu)
+		result := initializer.DB_HOSPITAL.Where("url = ? AND is_delete = 0", urlPath).First(&menu)
 		if result.Error != nil {
 			return c.Next()
 		}
 
 		var count int64
-		initializer.DB.Model(&m_menu_role.MMenuRole{}).
+		initializer.DB_HOSPITAL.Model(&m_menu_role.MMenuRole{}).
 			Where("menu_id = ? AND role_id = ? AND is_delete = 0", menu.Id, roleID).
 			Count(&count)
 

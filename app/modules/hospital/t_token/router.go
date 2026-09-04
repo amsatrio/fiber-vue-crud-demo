@@ -1,4 +1,5 @@
 package t_token
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTTokenRepository(initializer.DB)
+	repo := NewTTokenRepository(initializer.DB_HOSPITAL)
 	service := NewTTokenService(repo)
 	handler := NewTTokenHandler(service, validate)
-	
+
 	api.Post("/t-token", handler.TTokenCreate)
 	api.Put("/t-token", handler.TTokenUpdate)
 	api.Get("/t-token/:id", handler.TTokenIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-token/:size", handler.GenerateTToken)
 }
-

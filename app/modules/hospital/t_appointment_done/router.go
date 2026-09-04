@@ -1,4 +1,5 @@
 package t_appointment_done
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTAppointmentDoneRepository(initializer.DB)
+	repo := NewTAppointmentDoneRepository(initializer.DB_HOSPITAL)
 	service := NewTAppointmentDoneService(repo)
 	handler := NewTAppointmentDoneHandler(service, validate)
-	
+
 	api.Post("/t-appointment-done", handler.TAppointmentDoneCreate)
 	api.Put("/t-appointment-done", handler.TAppointmentDoneUpdate)
 	api.Get("/t-appointment-done/:id", handler.TAppointmentDoneIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-appointment-done/:size", handler.GenerateTAppointmentDone)
 }
-

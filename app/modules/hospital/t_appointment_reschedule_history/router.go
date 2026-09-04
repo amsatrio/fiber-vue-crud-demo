@@ -1,4 +1,5 @@
 package t_appointment_reschedule_history
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTAppointmentRescheduleHistoryRepository(initializer.DB)
+	repo := NewTAppointmentRescheduleHistoryRepository(initializer.DB_HOSPITAL)
 	service := NewTAppointmentRescheduleHistoryService(repo)
 	handler := NewTAppointmentRescheduleHistoryHandler(service, validate)
-	
+
 	api.Post("/t-appointment-reschedule-history", handler.TAppointmentRescheduleHistoryCreate)
 	api.Put("/t-appointment-reschedule-history", handler.TAppointmentRescheduleHistoryUpdate)
 	api.Get("/t-appointment-reschedule-history/:id", handler.TAppointmentRescheduleHistoryIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-appointment-reschedule-history/:size", handler.GenerateTAppointmentRescheduleHistory)
 }
-

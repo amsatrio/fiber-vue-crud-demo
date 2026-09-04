@@ -1,4 +1,5 @@
 package m_menu_role
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMMenuRoleRepository(initializer.DB)
+	repo := NewMMenuRoleRepository(initializer.DB_HOSPITAL)
 	service := NewMMenuRoleService(repo)
 	handler := NewMMenuRoleHandler(service, validate)
-	
+
 	api.Post("/m-menu-role", handler.MMenuRoleCreate)
 	api.Put("/m-menu-role", handler.MMenuRoleUpdate)
 	api.Get("/m-menu-role/:id", handler.MMenuRoleIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-menu-role/:size", handler.GenerateMMenuRole)
 }
-

@@ -1,4 +1,5 @@
-@base_url = http://localhost:9001/v1/hospital
+@base_url=https://fiber-vue-crud-demo.vercel.app/v1/hospital
+# @base_url = http://localhost:9001/v1/hospital
 
 ### login
 # @name login

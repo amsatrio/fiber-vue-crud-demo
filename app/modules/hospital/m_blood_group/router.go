@@ -1,4 +1,5 @@
 package m_blood_group
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMBloodGroupRepository(initializer.DB)
+	repo := NewMBloodGroupRepository(initializer.DB_HOSPITAL)
 	service := NewMBloodGroupService(repo)
 	handler := NewMBloodGroupHandler(service, validate)
-	
+
 	api.Post("/m-blood-group", handler.MBloodGroupCreate)
 	api.Put("/m-blood-group", handler.MBloodGroupUpdate)
 	api.Get("/m-blood-group/:id", handler.MBloodGroupIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-blood-group/:size", handler.GenerateMBloodGroup)
 }
-

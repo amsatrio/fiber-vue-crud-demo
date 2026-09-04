@@ -1,4 +1,5 @@
 package m_medical_item_category
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMMedicalItemCategoryRepository(initializer.DB)
+	repo := NewMMedicalItemCategoryRepository(initializer.DB_HOSPITAL)
 	service := NewMMedicalItemCategoryService(repo)
 	handler := NewMMedicalItemCategoryHandler(service, validate)
-	
+
 	api.Post("/m-medical-item-category", handler.MMedicalItemCategoryCreate)
 	api.Put("/m-medical-item-category", handler.MMedicalItemCategoryUpdate)
 	api.Get("/m-medical-item-category/:id", handler.MMedicalItemCategoryIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-medical-item-category/:size", handler.GenerateMMedicalItemCategory)
 }
-

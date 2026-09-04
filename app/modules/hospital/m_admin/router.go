@@ -1,4 +1,5 @@
 package m_admin
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMAdminRepository(initializer.DB)
+	repo := NewMAdminRepository(initializer.DB_HOSPITAL)
 	service := NewMAdminService(repo)
 	handler := NewMAdminHandler(service, validate)
-	
+
 	api.Post("/m-admin", handler.MAdminCreate)
 	api.Put("/m-admin", handler.MAdminUpdate)
 	api.Get("/m-admin/:id", handler.MAdminIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-admin/:size", handler.GenerateMAdmin)
 }
-

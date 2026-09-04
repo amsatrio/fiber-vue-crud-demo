@@ -1,4 +1,5 @@
 package m_menu
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMMenuRepository(initializer.DB)
+	repo := NewMMenuRepository(initializer.DB_HOSPITAL)
 	service := NewMMenuService(repo)
 	handler := NewMMenuHandler(service, validate)
-	
+
 	api.Post("/m-menu", handler.MMenuCreate)
 	api.Put("/m-menu", handler.MMenuUpdate)
 	api.Get("/m-menu/:id", handler.MMenuIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-menu/:size", handler.GenerateMMenu)
 }
-

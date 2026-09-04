@@ -1,4 +1,5 @@
 package t_appointment_cancellation
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTAppointmentCancellationRepository(initializer.DB)
+	repo := NewTAppointmentCancellationRepository(initializer.DB_HOSPITAL)
 	service := NewTAppointmentCancellationService(repo)
 	handler := NewTAppointmentCancellationHandler(service, validate)
-	
+
 	api.Post("/t-appointment-cancellation", handler.TAppointmentCancellationCreate)
 	api.Put("/t-appointment-cancellation", handler.TAppointmentCancellationUpdate)
 	api.Get("/t-appointment-cancellation/:id", handler.TAppointmentCancellationIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-appointment-cancellation/:size", handler.GenerateTAppointmentCancellation)
 }
-

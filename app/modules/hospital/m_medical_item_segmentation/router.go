@@ -1,4 +1,5 @@
 package m_medical_item_segmentation
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewMMedicalItemSegmentationRepository(initializer.DB)
+	repo := NewMMedicalItemSegmentationRepository(initializer.DB_HOSPITAL)
 	service := NewMMedicalItemSegmentationService(repo)
 	handler := NewMMedicalItemSegmentationHandler(service, validate)
-	
+
 	api.Post("/m-medical-item-segmentation", handler.MMedicalItemSegmentationCreate)
 	api.Put("/m-medical-item-segmentation", handler.MMedicalItemSegmentationUpdate)
 	api.Get("/m-medical-item-segmentation/:id", handler.MMedicalItemSegmentationIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/m-medical-item-segmentation/:size", handler.GenerateMMedicalItemSegmentation)
 }
-

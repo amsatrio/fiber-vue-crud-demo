@@ -1,4 +1,5 @@
 package t_customer_va_history
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTCustomerVaHistoryRepository(initializer.DB)
+	repo := NewTCustomerVaHistoryRepository(initializer.DB_HOSPITAL)
 	service := NewTCustomerVaHistoryService(repo)
 	handler := NewTCustomerVaHistoryHandler(service, validate)
-	
+
 	api.Post("/t-customer-va-history", handler.TCustomerVaHistoryCreate)
 	api.Put("/t-customer-va-history", handler.TCustomerVaHistoryUpdate)
 	api.Get("/t-customer-va-history/:id", handler.TCustomerVaHistoryIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-customer-va-history/:size", handler.GenerateTCustomerVaHistory)
 }
-

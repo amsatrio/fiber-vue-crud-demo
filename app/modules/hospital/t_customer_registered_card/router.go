@@ -1,4 +1,5 @@
 package t_customer_registered_card
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTCustomerRegisteredCardRepository(initializer.DB)
+	repo := NewTCustomerRegisteredCardRepository(initializer.DB_HOSPITAL)
 	service := NewTCustomerRegisteredCardService(repo)
 	handler := NewTCustomerRegisteredCardHandler(service, validate)
-	
+
 	api.Post("/t-customer-registered-card", handler.TCustomerRegisteredCardCreate)
 	api.Put("/t-customer-registered-card", handler.TCustomerRegisteredCardUpdate)
 	api.Get("/t-customer-registered-card/:id", handler.TCustomerRegisteredCardIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-customer-registered-card/:size", handler.GenerateTCustomerRegisteredCard)
 }
-

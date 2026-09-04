@@ -1,4 +1,5 @@
 package t_current_doctor_specialization
+
 import (
 	"github.com/amsatrio/fiber-vue-crud-demo/app/initializer"
 
@@ -7,10 +8,10 @@ import (
 )
 
 func GetRouter(api fiber.Router, validate *validator.Validate) {
-	repo := NewTCurrentDoctorSpecializationRepository(initializer.DB)
+	repo := NewTCurrentDoctorSpecializationRepository(initializer.DB_HOSPITAL)
 	service := NewTCurrentDoctorSpecializationService(repo)
 	handler := NewTCurrentDoctorSpecializationHandler(service, validate)
-	
+
 	api.Post("/t-current-doctor-specialization", handler.TCurrentDoctorSpecializationCreate)
 	api.Put("/t-current-doctor-specialization", handler.TCurrentDoctorSpecializationUpdate)
 	api.Get("/t-current-doctor-specialization/:id", handler.TCurrentDoctorSpecializationIndex)
@@ -19,4 +20,3 @@ func GetRouter(api fiber.Router, validate *validator.Validate) {
 
 	//api.Get("/generator/t-current-doctor-specialization/:size", handler.GenerateTCurrentDoctorSpecialization)
 }
-
